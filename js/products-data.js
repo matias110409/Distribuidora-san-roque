@@ -214,3 +214,8 @@ const BRANDS = [
   { name: "Lheritier", desc: "Calidad reconocida en postres de maní y confituras" },
   { name: "Argentfrut", desc: "Especialistas en decoraciones crocantes y baños de chocolate" }
 ];
+
+if (typeof window !== 'undefined') {
+  window.PRODUCTS = PRODUCTS;
+  window.BRANDS = BRANDS;
+}

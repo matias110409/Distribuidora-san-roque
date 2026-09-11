@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Mayorista | Materia Prima para Panaderías y Confiterías | San Roque</title>
+  <meta name="description" content="Catálogo completo de materias primas para panaderías y repostería. Agrega productos al carrito y haz tu pedido mayorista consolidado directamente por WhatsApp.">
+  
+  <!-- Google Fonts: Montserrat + Outfit + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-catalogo">
+
+  <!-- Header Específico de Catálogo -->
+  <header class="site-header site-header-catalogo">
+    <div class="container header-container">
+      <a href="index.html" class="brand-logo" aria-label="Distribuidora San Roque Volver al Inicio">
+        <img src="imagenes de pagina/logo.jpg" alt="Distribuidora San Roque Logo" class="logo-img">
+        <div class="logo-text">
+          <span class="logo-title">SAN ROQUE</span>
+          <span class="logo-subtitle">DISTRIBUIDORA S.R.L.</span>
+        </div>
+      </a>
+
+      <!-- Acciones de Navegación del Catálogo -->
+      <div class="catalogo-header-actions">
+        <a href="index.html" class="btn-back-home" aria-label="Volver al Inicio">
+          <span class="back-icon" aria-hidden="true">←</span>
+          <span class="back-text-full">Volver al Inicio</span>
+          <span class="back-text-short">Inicio</span>
+        </a>
+
+        <nav class="catalogo-nav-desktop" aria-label="Navegación secundaria">
+          <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+          <a href="index.html#marcas" class="nav-link">Marcas</a>
+          <a href="index.html#contacto" class="nav-link">Contacto</a>
+        </nav>
+
+        <!-- Botón de Carrito con Contador Dinámico -->
+        <button class="btn-cart-toggle open-cart-btn" id="header-cart-btn" aria-label="Ver Carrito de Compras">
+          <span class="cart-btn-icon">🛒</span>
+          <span class="cart-btn-label">Pedido</span>
+          <span class="cart-badge cart-badge-hidden" id="header-cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Catálogo Screen -->
+  <main class="catalogo-main-content">
+    <!-- Banner de Cabecera con Degradado Corporativo -->
+    <section class="catalogo-hero">
+      <div class="container">
+        <div class="catalogo-hero-content">
+          <div class="hero-pill">
+            <span>📦 Catálogo Mayorista • Pedidos Online</span>
+          </div>
+          <h1 class="catalogo-hero-title">
+            Materia Prima para <span>Panaderías y Confiterías</span>
+          </h1>
+          <p class="catalogo-hero-desc">
+            Elegí las cantidades de bultos o cajas que necesita tu negocio, agregalas al carrito y generá tu pedido consolidado para recibir cotización inmediata por WhatsApp.
+          </p>
+
+          <!-- Barra de Búsqueda y Filtros -->
+          <div class="catalog-controls catalogo-page-controls">
+            <!-- Buscador -->
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="product-search" placeholder="Buscar por producto, marca o ingrediente (ej. Calsa, Brownies, Margarina)..." aria-label="Buscar producto">
+            </div>
+
+            <!-- Filtros de categoría -->
+            <div class="filter-pills" role="tablist">
+              <button class="filter-btn active" data-category="all">Todos los Insumos</button>
+              <button class="filter-btn" data-category="premezclas">Premezclas y Harinas</button>
+              <button class="filter-btn" data-category="margarinas">Margarinas y Grasas</button>
+              <button class="filter-btn" data-category="reposteria">Repostería y Rellenos</button>
+              <button class="filter-btn" data-category="lacteos">Lácteos y Cremas</button>
+              <button class="filter-btn" data-category="golosinas">Frutos Secos y Golosinas</button>
+            </div>
+
+            <!-- Contador de disponibilidad -->
+            <div class="catalogo-status-bar">
+              <span id="total-products-count">Cargando insumos...</span>
+              <span class="status-tip">💡 Puedes seleccionar más de 2 unidades por producto con los controles <strong>[-]</strong> y <strong>[+]</strong>.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grilla de Productos -->
+    <section class="catalogo-products-section">
+      <div class="container">
+        <div class="products-grid" id="products-grid">
+          <!-- Inyectado dinámicamente con catalogo.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Panel Lateral Desplegable: Carrito de Compras (Drawer) -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Carrito de Pedidos" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <div class="cart-header-title-box">
+        <h3>🛒 Tu Pedido de Insumos</h3>
+        <span class="cart-total-badge" id="cart-total-qty">0 bultos</span>
+      </div>
+      <button class="close-cart-btn" id="close-cart-btn" aria-label="Cerrar Carrito">✕</button>
+    </div>
+
+    <div class="cart-drawer-body">
+      <!-- Estado cuando el carrito está vacío -->
+      <div class="cart-drawer-empty" id="cart-drawer-empty">
+        <div class="cart-empty-icon">🧺</div>
+        <h4>Tu carrito de pedidos está vacío</h4>
+        <p>Explora nuestras líneas de productos, selecciona las cantidades que necesitas y agrégalas aquí para armar tu pedido.</p>
+      </div>
+
+      <!-- Lista dinámica de productos agregados -->
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- Renderizado dinámicamente con catalogo.js -->
+      </div>
+    </div>
+
+    <!-- Pie del Carrito con Formulario de Datos y Botón de WhatsApp -->
+    <div class="cart-drawer-footer" id="cart-drawer-footer" style="display: none;">
+      <div class="cart-customer-info">
+        <label class="cart-input-label" for="customer-name">Nombre o Razón Social</label>
+        <input type="text" id="customer-name" class="cart-input" placeholder="Ej: Panadería La Espiga">
+        
+        <label class="cart-input-label" for="customer-notes" style="margin-top: 0.5rem;">Localidad o indicación (opcional)</label>
+        <input type="text" id="customer-notes" class="cart-input" placeholder="Ej: Ramos Mejía, entregar por la mañana">
+      </div>
+
+      <button type="button" class="btn btn-whatsapp-order" id="btn-send-whatsapp-order">
+        <span class="btn-wa-icon">📲</span>
+        <span>Hacer Pedido por WhatsApp</span>
+      </button>
+
+      <div class="cart-footer-actions">
+        <button type="button" class="btn-clear-cart" id="btn-clear-cart">
+          Vaciar pedido
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Botón Flotante de Carrito en Móviles / Tablets -->
+  <button class="floating-cart-btn open-cart-btn" id="floating-cart-btn" aria-label="Ver pedido en carrito">
+    <span class="floating-cart-icon">🛒</span>
+    <span class="cart-badge floating-cart-badge cart-badge-hidden">0</span>
+  </button>
+
+  <!-- Botón Flotante de WhatsApp -->
+  <div class="floating-whatsapp-wrapper" id="whatsapp-wrapper">
+    <div class="whatsapp-tooltip" id="whatsapp-tooltip">
+      <span class="tooltip-badge">En línea</span>
+      <p>¿Consultas de stock mayorista? <strong>¡Escribinos!</strong></p>
+    </div>
+    <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20una%20consulta%20mayorista" target="_blank" rel="noopener noreferrer" class="floating-whatsapp" aria-label="Contactar por WhatsApp">
+      <span class="pulse-ring"></span>
+      <span class="pulse-ring pulse-ring-delay"></span>
+      <svg width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
+  </div>
+
+  <!-- Modal Detalle de Producto con Selector de Cantidad -->
+  <div class="modal-overlay" id="product-modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-image-wrapper">
+          <img id="modal-image" src="" alt="Producto">
+        </div>
+        <div class="modal-details">
+          <span class="modal-brand" id="modal-brand">Marca</span>
+          <h3 class="modal-title" id="modal-title">Título del Producto</h3>
+          
+          <div class="modal-meta-box">
+            <div class="modal-meta-row">
+              <strong>Categoría:</strong>
+              <span id="modal-category">-</span>
+            </div>
+            <div class="modal-meta-row" style="margin-top: 0.35rem;">
+              <strong>Presentación:</strong>
+              <span id="modal-presentation">-</span>
+            </div>
+          </div>
+
+          <p class="modal-desc" id="modal-description"></p>
+
+          <!-- Cantidad y Agregar al Carrito dentro del Modal -->
+          <div class="modal-order-box">
+            <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.4rem; display: block;">
+              Cantidad de bultos a solicitar:
+            </label>
+            <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.85rem;">
+              <div class="qty-selector" style="flex: 0 0 130px;">
+                <button type="button" class="qty-btn" id="modal-qty-minus">-</button>
+                <input type="number" class="qty-input" id="modal-qty-input" value="1" min="1" max="999">
+                <button type="button" class="qty-btn" id="modal-qty-plus">+</button>
+              </div>
+              <button class="btn btn-primary" id="modal-add-to-cart-btn" style="flex: 1;">
+                🛒 Agregar al Carrito
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top: 0.5rem;">
+            <a href="#" id="modal-whatsapp-btn" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="width: 100%;">
+              Consultar por este producto en WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <img src="imagenes de pagina/logo.jpg" alt="Distribuidora San Roque Logo" class="logo-img logo-img-footer">
+            <div class="logo-text">
+              <span class="logo-title" style="color: #fff;">SAN ROQUE</span>
+              <span class="logo-subtitle" style="color: #ffd466;">DISTRIBUIDORA S.R.L.</span>
+            </div>
+          </div>
+          <p>
+            Más de 40 años abasteciendo de materias primas a maestros panaderos y pasteleros.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Navegación</h5>
+          <ul class="footer-links">
+            <li><a href="index.html#inicio">Inicio</a></li>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="catalogo.html">Catálogo Completo</a></li>
+            <li><a href="index.html#contacto">Contacto y Redes</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Redes y Canales</h5>
+          <ul class="footer-links">
+            <li><a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer">WhatsApp Comercial</a></li>
+            <li><a href="https://www.instagram.com/distribuidorasanroquesrl/" target="_blank" rel="noopener noreferrer">Instagram Oficial</a></li>
+            <li><a href="https://www.facebook.com/DISTSANROQUESRL/?locale=es_LA" target="_blank" rel="noopener noreferrer">Facebook Oficial</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Distribuidora San Roque S.R.L. - Más de 40 Años de Trayectoria.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra de Navegación Inferior Móvil para Catálogo -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación Móvil">
+    <a href="index.html" class="mobile-nav-item">
+      <span class="mobile-nav-icon">🏠</span>
+      <span class="mobile-nav-label">Inicio</span>
+    </a>
+    <a href="catalogo.html" class="mobile-nav-item active">
+      <span class="mobile-nav-icon">📦</span>
+      <span class="mobile-nav-label">Catálogo</span>
+    </a>
+    <a href="javascript:void(0)" class="mobile-nav-item open-cart-btn">
+      <span class="mobile-nav-icon">🛒</span>
+      <span class="mobile-nav-label">Mi Pedido</span>
+    </a>
+    <a href="index.html#contacto" class="mobile-nav-item">
+      <span class="mobile-nav-icon">📍</span>
+      <span class="mobile-nav-label">Contacto</span>
+    </a>
+    <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20un%20pedido" target="_blank" rel="noopener noreferrer" class="mobile-nav-item mobile-nav-wa">
+      <span class="mobile-nav-icon">💬</span>
+      <span class="mobile-nav-label">Pedir</span>
+    </a>
+  </nav>
+
+  <!-- Contenedor para Notificaciones Toast Dinámicas -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>

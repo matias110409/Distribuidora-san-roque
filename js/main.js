@@ -186,135 +186,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroFeatures) counterObserver.observe(heroFeatures);
   }
 
-  // Función para filtrar el catálogo desde los botones de las recetas en video
+  // Redirección al catálogo con categoría seleccionada
   window.filterCatalogByKeyword = function(keyword) {
-    if (searchInput) {
-      searchInput.value = keyword;
-      searchQuery = keyword;
-    }
-    // Si coincide con alguna categoría, activar su botón
-    let matchedCategory = false;
-    filterButtons.forEach(b => {
-      if (b.dataset.category === keyword) {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        b.classList.add('active');
-        currentCategory = keyword;
-        searchQuery = '';
-        if (searchInput) searchInput.value = '';
-        matchedCategory = true;
-      }
-    });
-
-    if (!matchedCategory) {
-      filterButtons.forEach(btn => {
-        if (btn.dataset.category === 'all') btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-      currentCategory = 'all';
-    }
-
-    renderProducts();
-    animateProductCards();
-
-    // Desplazar suavemente a catálogo
-    const catalogEl = document.getElementById('catalogo');
-    if (catalogEl) {
-      catalogEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.location.href = `catalogo.html?cat=${encodeURIComponent(keyword)}`;
   };
 
-  // Animaciones de Entrada en Scroll (IntersectionObserver)
+  // Animaciones bidireccionales en Scroll (aparecen al bajar, desaparecen al subir y vuelven a aparecer al bajar)
   function setupScrollAnimations() {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     if (!animatedElements.length) return;
 
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
+    const scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
+        } else {
+          entry.target.classList.remove('revealed');
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -30px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
     });
 
     animatedElements.forEach(el => scrollObserver.observe(el));
-  }
-
-  // Función global para abrir el modal desde el onclick
-  window.openProductModal = function(productId) {
-    const p = PRODUCTS.find(prod => prod.id === productId);
-    if (!p) return;
-
-    modalImage.src = p.image;
-    modalImage.alt = p.name;
-    modalBrand.textContent = p.brand;
-    modalTitle.textContent = p.name;
-    modalCategory.textContent = formatCategory(p.category);
-    modalPresentation.textContent = p.presentation;
-    modalDescription.textContent = p.description;
-
-    const waLink = createWhatsAppLink(p.name);
-    modalWhatsappBtn.href = waLink;
-
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Bloquear scroll
-  };
-
-  function closeModal() {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  // Event Listeners del Modal
-  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
-
-  // Filtros de categoría
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.dataset.category;
-      renderProducts();
-      animateProductCards();
-    });
-  });
-
-  // Buscador
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      renderProducts();
-      animateProductCards();
-    });
-  }
-
-  // Animación de entrada escalonada para las tarjetas de producto (suave y pausada)
-  function animateProductCards() {
-    if (!productsGrid) return;
-    const cards = productsGrid.querySelectorAll('.product-card');
-    cards.forEach((card, i) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(22px)';
-      card.style.transition = 'opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)';
-      card.style.transitionDelay = `${Math.min(i * 0.07, 0.65)}s`;
-      requestAnimationFrame(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      });
-    });
   }
 
   // Formulario de Contacto Interactivo
@@ -324,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const nombreInput = document.getElementById('nombre');
       const clientName = nombreInput?.value.trim() || 'Cliente';
-      showToast(`¡Gracias ${clientName}! Tu consulta fue enviada con éxito. Nos pondremos en contacto a la brevedad.`, '📨', 'success', 5000);
+      showToast(`¡Gracias ${clientName}! Tu consulta fue enviada con éxito. Nos contactaremos a la brevedad.`, '📨', 'success', 5000);
       contactForm.reset();
     });
   }
@@ -361,24 +256,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Manejo de videos de recetas verticales: pausar otros al reproducir uno
-  const recipeVideos = document.querySelectorAll('.recipe-video');
-  recipeVideos.forEach(video => {
-    video.addEventListener('play', () => {
-      recipeVideos.forEach(other => {
-        if (other !== video && !other.paused) {
-          other.pause();
-        }
-      });
-    });
-  });
-
   // Mobile Bottom Navigation Bar: sincronizar pestaña activa según scroll
   const mobileNavItems = document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item:not(.mobile-nav-wa)');
   const sectionsToTrack = [
     { id: 'inicio', navItem: document.getElementById('mob-nav-inicio') },
-    { id: 'recetas', navItem: document.getElementById('mob-nav-recetas') },
-    { id: 'catalogo', navItem: document.getElementById('mob-nav-catalogo') },
+    { id: 'nosotros', navItem: document.getElementById('mob-nav-nosotros') },
     { id: 'contacto', navItem: document.getElementById('mob-nav-contacto') }
   ];
 
@@ -398,9 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Inicializar
-  renderProducts();
   renderBrands();
-  animateProductCards();
   setupAnimatedCounters();
   setupScrollAnimations();
 });
