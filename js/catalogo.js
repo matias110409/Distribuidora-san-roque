@@ -141,9 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
               </button>
             </div>
 
-            <div class="product-actions" style="margin-top: 0.6rem;">
-              <button class="btn btn-outline btn-sm" style="width: 100%; font-size: 0.82rem;" onclick="window.openProductModal('${p.id}')">
-                Ver Ficha Completa
+            <div class="product-actions">
+              <button type="button" class="btn btn-view-product" onclick="window.openProductModal('${p.id}')">
+                <span class="btn-text-desktop">Ver Ficha Completa</span>
+                <span class="btn-text-mobile">Ver Ficha</span>
               </button>
             </div>
           </div>

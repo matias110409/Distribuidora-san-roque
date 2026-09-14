@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isNaN(target)) return;
 
             let startTime = null;
-            const duration = 3500; // 3.5 segundos para un conteo suave, pausado y elegante
+            const duration = 1800; // Conteo más rápido y dinámico (1.8s)
 
             function step(timestamp) {
               if (!startTime) startTime = timestamp;
