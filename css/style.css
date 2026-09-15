@@ -491,10 +491,12 @@ h4,
     opacity: 0;
     transform: scale(0.4) translateY(-30px);
   }
+
   70% {
     opacity: 1;
     transform: scale(1.05) translateY(0);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -505,6 +507,7 @@ h4,
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-8px);
   }
@@ -731,8 +734,8 @@ section {
    ========================================================================== */
 .catalog-preview-section {
   background: radial-gradient(circle at 10% 20%, rgba(255, 212, 102, 0.08) 0%, transparent 40%),
-              radial-gradient(circle at 90% 80%, rgba(37, 211, 102, 0.06) 0%, transparent 40%),
-              linear-gradient(135deg, #071e3d 0%, #0d3463 50%, #154c8e 100%);
+    radial-gradient(circle at 90% 80%, rgba(37, 211, 102, 0.06) 0%, transparent 40%),
+    linear-gradient(135deg, #071e3d 0%, #0d3463 50%, #154c8e 100%);
   color: #ffffff;
   position: relative;
   overflow: hidden;
@@ -1128,10 +1131,12 @@ section {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
   }
+
   .brand-card {
     padding: 1.5rem 1rem;
     min-height: 100px;
   }
+
   .brand-card img {
     max-height: 60px;
   }
@@ -1142,10 +1147,12 @@ section {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
+
   .brand-card {
     padding: 1.25rem 0.75rem;
     min-height: 85px;
   }
+
   .brand-card img {
     max-height: 50px;
   }
@@ -1383,13 +1390,23 @@ section {
 }
 
 @keyframes truckFloat {
-  0% { transform: translateY(0) scale(1.08); }
-  100% { transform: translateY(-7px) scale(1.08); }
+  0% {
+    transform: translateY(0) scale(1.08);
+  }
+
+  100% {
+    transform: translateY(-7px) scale(1.08);
+  }
 }
 
 @keyframes cartFloat {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-6px) rotate(1.2deg); }
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(-6px) rotate(1.2deg);
+  }
 }
 
 /* ==========================================================================
@@ -2492,7 +2509,7 @@ section {
 
 .catalogo-hero {
   background: radial-gradient(circle at 85% 20%, rgba(255, 212, 102, 0.12) 0%, transparent 45%),
-              linear-gradient(135deg, #071c36 0%, #0d2e59 50%, #154784 100%);
+    linear-gradient(135deg, #071c36 0%, #0d2e59 50%, #154784 100%);
   color: #ffffff;
   padding: 3.5rem 0 2.75rem;
   position: relative;
@@ -3042,6 +3059,7 @@ section {
     opacity: 0;
     transform: translateY(24px) scale(0.92);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -3122,6 +3140,7 @@ section {
    Diseño Móvil Completo - Stitch Artisanal Supply Framework (Smartphone)
    ========================================================================== */
 @media (max-width: 768px) {
+
   /* Espacio inferior para la barra de navegación móvil solo en catálogo */
   body.page-catalogo {
     padding-bottom: 82px;
@@ -3143,7 +3162,7 @@ section {
   }
 
   .logo-subtitle {
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     letter-spacing: 0.12em;
   }
 
@@ -3221,7 +3240,7 @@ section {
   }
 
   .site-header-catalogo .logo-subtitle {
-    font-size: 0.56rem;
+    font-size: 0.68rem;
     letter-spacing: 0.1em;
     white-space: nowrap;
   }
@@ -3415,7 +3434,7 @@ section {
   .catalogo-hero {
     padding: 1.75rem 0 1.25rem !important;
     background: radial-gradient(circle at 85% 20%, rgba(255, 212, 102, 0.12) 0%, transparent 45%),
-                linear-gradient(135deg, #071c36 0%, #0d2e59 50%, #154784 100%) !important;
+      linear-gradient(135deg, #071c36 0%, #0d2e59 50%, #154784 100%) !important;
     color: #ffffff !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
   }
@@ -3474,7 +3493,7 @@ section {
   }
 
   .search-box input {
-    font-size: 0.85rem !important;
+    font-size: 1rem !important;
     padding: 0.65rem 1rem 0.65rem 2.7rem !important;
     border: none !important;
     background: transparent !important;
@@ -3600,7 +3619,7 @@ section {
     position: absolute !important;
     top: 7px !important;
     left: 7px !important;
-    font-size: 0.62rem !important;
+    font-size: 0.7rem !important;
     font-weight: 700 !important;
     padding: 0.18rem 0.45rem !important;
     border-radius: 6px !important;
@@ -3616,7 +3635,7 @@ section {
     position: absolute !important;
     bottom: 6px !important;
     right: 6px !important;
-    font-size: 0.62rem !important;
+    font-size: 0.7rem !important;
     font-weight: 600 !important;
     padding: 0.15rem 0.42rem !important;
     border-radius: 6px !important;
@@ -3637,7 +3656,7 @@ section {
   }
 
   .product-category-tag {
-    font-size: 0.62rem !important;
+    font-size: 0.75rem !important;
     font-weight: 600 !important;
     color: var(--color-secondary) !important;
     text-transform: uppercase !important;
@@ -3649,7 +3668,7 @@ section {
   }
 
   .product-title {
-    font-size: 0.84rem !important;
+    font-size: 0.92rem !important;
     font-weight: 700 !important;
     color: var(--text-primary) !important;
     line-height: 1.25 !important;
@@ -3976,7 +3995,7 @@ section {
     position: absolute !important;
     top: -6px !important;
     right: -10px !important;
-    font-size: 0.65rem !important;
+    font-size: 0.72rem !important;
     padding: 0.1rem 0.35rem !important;
     min-width: 17px !important;
     height: 17px !important;
@@ -3997,7 +4016,7 @@ section {
   }
 
   .mobile-nav-label {
-    font-size: 0.72rem !important;
+    font-size: 0.78rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.01em !important;
   }
@@ -4021,7 +4040,7 @@ section {
   }
 
   /* Toast en móvil: ocupa todo el ancho disponible sobre la barra inferior */
-    .toast-container {
+  .toast-container {
     position: fixed !important;
     bottom: 90px !important;
     left: 12px !important;
