@@ -103,13 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return map[cat] || cat;
   }
 
-  // Renderizar Marcas
+  // Renderizar Marcas con Logotipos y Animación Stagger
   function renderBrands() {
     if (!brandsGrid || typeof BRANDS === 'undefined') return;
-    brandsGrid.innerHTML = BRANDS.map(b => `
-      <div class="brand-card">
-        <h4>${b.name}</h4>
-        <p>${b.desc}</p>
+    brandsGrid.innerHTML = BRANDS.map((b, index) => `
+      <div class="brand-card animate-on-scroll animate-fade-up" style="transition-delay: ${index * 0.1}s;">
+        <img src="${b.logo}" alt="Logo ${b.name}" loading="lazy">
       </div>
     `).join('');
   }

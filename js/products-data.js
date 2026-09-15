@@ -203,16 +203,14 @@ const PRODUCTS = [
 ];
 
 const BRANDS = [
-  { name: "Calsa", desc: "Líder en levaduras, margarinas y premezclas industriales" },
-  { name: "Levadura Virgen", desc: "La levadura fresca por excelencia de la panadería tradicional" },
-  { name: "Ledevit", desc: "Cremas vegetales, rellenos y premezclas sin gluten de alta pastelería" },
-  { name: "Mapsa", desc: "Pastas de relleno y coberturas premium para chocolatería" },
-  { name: "San Ignacio", desc: "Tradición y excelencia en dulce de leche y quesos crema" },
-  { name: "Grabich", desc: "Golosinas, confites de fantasía e insumos para candy bar" },
-  { name: "Línea de Plata", desc: "Soluciones especializadas para panificación y repostería" },
-  { name: "Innova 360°", desc: "Premezclas artesanales con sabor auténtico y fácil preparación" },
-  { name: "Lheritier", desc: "Calidad reconocida en postres de maní y confituras" },
-  { name: "Argentfrut", desc: "Especialistas en decoraciones crocantes y baños de chocolate" }
+  { name: "Calsa", logo: "logotipos-empresas/Calsa-logo.png" },
+  { name: "Ledevit", logo: "logotipos-empresas/insta_logo-Photoroom.png" },
+  { name: "Mapsa", logo: "logotipos-empresas/Mapsa-logo.png" },
+  { name: "San Ignacio", logo: "logotipos-empresas/Sanignacio-logo.png" },
+  { name: "Grabich", logo: "logotipos-empresas/9a5d84f6-3acf-4e5c-b62e-27db139fa032-AQExwbMjn8H3Wl2J-Photoroom.png" },
+  { name: "Lheritier", logo: "logotipos-empresas/2c2b47130276615.Y3JvcCwzMTcxLDI0ODEsMTY0LDA-Photoroom.png" },
+  { name: "Argentfrut", logo: "logotipos-empresas/argenfrut-logo.png" },
+  { name: "Tío Lucas", logo: "logotipos-empresas/TIOLUCAS-logo.PNG" }
 ];
 
 if (typeof window !== 'undefined') {
