@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Mayorista | Materia Prima para Panaderías y Confiterías | San Roque</title>
+  <title>Catálogo de Productos | Materia Prima para Panaderías y Confiterías | San Roque</title>
   <meta name="description"
-    content="Catálogo completo de materias primas para panaderías y repostería. Agrega productos al carrito y haz tu pedido mayorista consolidado directamente por WhatsApp.">
+    content="Catálogo completo de materias primas para panaderías y repostería. Agrega productos al carrito y haz tu pedido consolidado directamente por WhatsApp.">
 
   <!-- Google Fonts: Montserrat + Outfit + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +20,17 @@
 </head>
 
 <body class="page-catalogo">
+
+  <!-- Barra Superior: Horarios de Sucursales -->
+  <aside class="top-promo-bar" aria-label="Horarios de Sucursales">
+    <div class="container top-promo-container">
+      <div class="top-promo-right" style="margin: 0 auto;">
+        <span class="top-promo-branch"><span class="branch-status-dot dot-retail"></span> Santa Fe (Minorista): <strong>7:30 a 16:30 hs</strong></span>
+        <span class="top-promo-divider">|</span>
+        <span class="top-promo-branch"><span class="branch-status-dot dot-wholesale"></span> Sauce Viejo (Mayorista): <strong>6:00 a 14:00 hs</strong></span>
+      </div>
+    </div>
+  </aside>
 
   <!-- Header Específico de Catálogo -->
   <header class="site-header site-header-catalogo">
@@ -61,10 +72,7 @@
     <!-- Banner de Cabecera con Degradado Corporativo -->
     <section class="catalogo-hero">
       <div class="container">
-        <div class="catalogo-hero-content">
-          <div class="hero-pill">
-            <span>📦 Catálogo Mayorista • Pedidos Online</span>
-          </div>
+
           <h1 class="catalogo-hero-title">
             Materia Prima para <span>Panaderías y Confiterías</span>
           </h1>
@@ -126,6 +134,7 @@
       <button class="close-cart-btn" id="close-cart-btn" aria-label="Cerrar Carrito">✕</button>
     </div>
 
+
     <div class="cart-drawer-body">
       <!-- Estado cuando el carrito está vacío -->
       <div class="cart-drawer-empty" id="cart-drawer-empty">
@@ -175,9 +184,9 @@
   <div class="floating-whatsapp-wrapper" id="whatsapp-wrapper">
     <div class="whatsapp-tooltip" id="whatsapp-tooltip">
       <span class="tooltip-badge">En línea</span>
-      <p>¿Consultas de stock mayorista? <strong>¡Escribinos!</strong></p>
+      <p>¿Dudas? <strong>¡Consultanos!</strong></p>
     </div>
-    <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20una%20consulta%20mayorista"
+    <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20una%20consulta"
       target="_blank" rel="noopener noreferrer" class="floating-whatsapp" aria-label="Contactar por WhatsApp">
       <span class="pulse-ring"></span>
       <span class="pulse-ring pulse-ring-delay"></span>
@@ -265,7 +274,23 @@
             <li><a href="index.html#inicio">Inicio</a></li>
             <li><a href="index.html#nosotros">Nosotros</a></li>
             <li><a href="catalogo.html">Catálogo Completo</a></li>
-            <li><a href="index.html#contacto">Contacto y Redes</a></li>
+            <li><a href="index.html#contacto">Sucursales y Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col-branches">
+          <h5>Sucursales & Horarios</h5>
+          <ul class="footer-links footer-branches-list">
+            <li>
+              <strong>🏪 Santa Fe (Minorista):</strong><br>
+              <span>9 de Julio 4854</span><br>
+              <span class="footer-schedule-badge">Lun a Vie de 7:30 a 16:30 hs</span>
+            </li>
+            <li style="margin-top: 0.75rem;">
+              <strong>🏭 Sauce Viejo (Mayorista):</strong><br>
+              <span>Ruta 11 km 456</span><br>
+              <span class="footer-schedule-badge">Lun a Vie de 6:00 a 14:00 hs</span>
+            </li>
+
           </ul>
         </div>
         <div class="footer-col">

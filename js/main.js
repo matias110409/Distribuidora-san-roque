@@ -211,17 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedElements.forEach(el => scrollObserver.observe(el));
   }
 
-  // Formulario de Contacto Interactivo
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nombreInput = document.getElementById('nombre');
-      const clientName = nombreInput?.value.trim() || 'Cliente';
-      showToast(`¡Gracias ${clientName}! Tu consulta fue enviada con éxito. Nos contactaremos a la brevedad.`, '📨', 'success', 5000);
-      contactForm.reset();
-    });
-  }
+
 
   // Tooltip Interactivo de WhatsApp
   const whatsappTooltip = document.getElementById('whatsapp-tooltip');

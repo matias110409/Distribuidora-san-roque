@@ -21,6 +21,19 @@
 
 <body>
 
+  <!-- Barra Superior: Horarios de Sucursales -->
+  <aside class="top-promo-bar" aria-label="Horarios de Sucursales">
+    <div class="container top-promo-container">
+      <div class="top-promo-right" style="margin: 0 auto;">
+        <span class="top-promo-branch"><span class="branch-status-dot dot-retail"></span> Santa Fe (Minorista):
+          <strong>7:30 a 16:30 hs</strong></span>
+        <span class="top-promo-divider">|</span>
+        <span class="top-promo-branch"><span class="branch-status-dot dot-wholesale"></span> Sauce Viejo (Mayorista):
+          <strong>6:00 a 14:00 hs</strong></span>
+      </div>
+    </div>
+  </aside>
+
   <!-- Header & Navegación -->
   <header class="site-header">
     <div class="container header-container">
@@ -188,12 +201,14 @@
 
             <!-- Camión que entra por la izquierda -->
             <div class="catalog-cta-truck animate-on-scroll animate-from-left">
-              <img src="imagenes de pagina/camion.png" alt="Distribución y Envíos San Roque" class="cta-img cta-truck-img" loading="lazy">
+              <img src="imagenes de pagina/camion.png" alt="Distribución y Envíos San Roque"
+                class="cta-img cta-truck-img" loading="lazy">
             </div>
 
             <!-- Carrito que entra por la derecha -->
             <div class="catalog-cta-cart animate-on-scroll animate-from-right">
-              <img src="imagenes de pagina/carrito.png" alt="Carrito de Compras Online" class="cta-img cta-cart-img" loading="lazy">
+              <img src="imagenes de pagina/carrito.png" alt="Carrito de Compras Online" class="cta-img cta-cart-img"
+                loading="lazy">
             </div>
 
             <!-- Botón de Acción debajo del título -->
@@ -215,7 +230,7 @@
           <h2 class="section-title">Comunícate con Nosotros</h2>
           <p class="section-subtitle">
             Seguinos en nuestras redes oficiales para novedades y promociones, o contactate directamente por WhatsApp
-            para consultas comerciales y presupuestos mayoristas.
+            para consultas comerciales y presupuestos.
           </p>
         </div>
 
@@ -282,59 +297,123 @@
           </div>
         </div>
 
-        <!-- Información de Depósito y Formulario de Consulta -->
-        <div class="contact-grid" style="margin-top: 2.5rem;">
-          <div class="contact-info animate-on-scroll animate-slide-right">
-            <h3 style="font-size: 1.4rem; margin-bottom: 1.25rem;">Depósito Central & Logística</h3>
-            <div class="contact-info-list">
-              <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <div>
-                  <h5>Centro de Distribución Mayorista</h5>
-                  <p>Depósito acondicionado con almacenamiento en frío y seco para materias primas.</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">⏰</div>
-                <div>
-                  <h5>Horario de Despacho y Atención</h5>
-                  <p>Lunes a Viernes de 07:30 a 17:00 hs | Sábados de 08:00 a 13:00 hs</p>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">🚚</div>
-                <div>
-                  <h5>Envíos Programados</h5>
-                  <p>Reparto propio con vehículos refrigerados para preservar la cadena de frío de levaduras y lácteos.
-                  </p>
-                </div>
-              </div>
-            </div>
+        <!-- Sección de Nuestras Sucursales: Ubicación y Horarios -->
+        <div class="branches-section-wrap" id="sucursales">
+          <div class="branches-header animate-on-scroll animate-fade-up">
+            <span class="section-pill">Puntos de Atención y Retiro</span>
+            <h3 class="branches-title">Nuestras Sucursales: Ubicación y Horarios</h3>
+            <p class="branches-subtitle">
+              Contamos con sedes preparadas específicamente para cada necesidad: atención directa minorista en Santa Fe
+              y centro de despacho mayorista en Sauce Viejo.
+            </p>
           </div>
 
-          <div class="contact-form-card animate-on-scroll animate-slide-left">
-            <h3 style="margin-bottom: 1.25rem; font-size: 1.4rem;">Envíanos tu consulta directa</h3>
-            <form id="contact-form">
-              <div class="form-group">
-                <label class="form-label" for="nombre">Nombre o Razón Social</label>
-                <input type="text" id="nombre" class="form-control" placeholder="Ej: Panadería La Espiga" required>
+          <div class="branches-grid animate-on-scroll animate-stagger">
+            <!-- Sucursal Santa Fe (Venta Minorista) -->
+            <article class="branch-card branch-card-retail">
+              <div class="branch-card-header">
+                <div class="branch-tag-pill branch-tag-retail">
+                  <span class="branch-tag-icon">🏪</span>
+                  <span>Venta Minorista</span>
+                </div>
+                <h4 class="branch-name">Sucursal Santa Fe</h4>
+                <p class="branch-role">Atención al público, panaderías locales, confiterías y emprendimientos
+                  gastronómicos.</p>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="telefono">Teléfono / Celular</label>
-                <input type="tel" id="telefono" class="form-control" placeholder="Ej: +54 9 11 ..." required>
+
+              <div class="branch-details-list">
+                <div class="branch-detail-item">
+                  <div class="branch-detail-icon">📍</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Dirección</span>
+                    <strong class="branch-detail-value">9 de Julio 4854, Santa Fe.</strong>
+                  </div>
+                </div>
+
+                <div class="branch-detail-item branch-detail-highlight">
+                  <div class="branch-detail-icon">⏰</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Horario de Atención</span>
+                    <strong class="branch-detail-value">Lunes a Viernes de 7:30 a 16:30 hs</strong>
+                  </div>
+                </div>
+
+                <div class="branch-detail-item">
+                  <div class="branch-detail-icon">🛍️</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Modalidad de Venta</span>
+                    <span class="branch-detail-desc">Venta por menor, fraccionado, insumos para repostería y atención
+                      directa en mostrador.</span>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="mensaje">Insumos que necesitas o consulta</label>
-                <textarea id="mensaje" class="form-control" placeholder="Indícanos los insumos, marcas o dudas..."
-                  required></textarea>
+
+              <div class="branch-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=9+de+Julio+4854%2C+Santa+Fe%2C+Argentina"
+                  target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-branch-maps"
+                  aria-label="Ver Sucursal Santa Fe en Google Maps">
+                  <span>🗺️ Ver en Google Maps</span>
+                </a>
+                <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20consultar%20por%20venta%20minorista%20en%20Sucursal%20Santa%20Fe"
+                  target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-branch-wa"
+                  aria-label="Consultar por WhatsApp a Sucursal Santa Fe">
+                  <span>💬 WhatsApp Minorista</span>
+                </a>
               </div>
-              <button type="submit" class="btn btn-primary" id="btn-submit-contact" style="width: 100%;">
-                <span>Enviar Consulta</span>
-              </button>
-            </form>
+            </article>
+
+            <!-- Sucursal Sauce Viejo (Venta Mayorista) -->
+            <article class="branch-card branch-card-wholesale">
+              <div class="branch-card-header">
+                <div class="branch-tag-pill branch-tag-wholesale">
+                  <span class="branch-tag-icon">🏭</span>
+                  <span>Venta Mayorista</span>
+                </div>
+                <h4 class="branch-name">Sucursal Sauce Viejo</h4>
+                <p class="branch-role">Centro logístico, depósitos en frío/seco y compras por volumen comercial.</p>
+              </div>
+
+              <div class="branch-details-list">
+                <div class="branch-detail-item">
+                  <div class="branch-detail-icon">📍</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Dirección</span>
+                    <strong class="branch-detail-value">Ruta 11 km 456, Sauce Viejo.</strong>
+                  </div>
+                </div>
+
+                <div class="branch-detail-item branch-detail-highlight">
+                  <div class="branch-detail-icon">⏰</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Horario de Despacho</span>
+                    <strong class="branch-detail-value">Lunes a Viernes de 6:00 a 14:00 hs</strong>
+                  </div>
+                </div>
+
+                <div class="branch-detail-item">
+                  <div class="branch-detail-icon">📦</div>
+                  <div class="branch-detail-info">
+                    <span class="branch-detail-label">Modalidad de Venta</span>
+                    <span class="branch-detail-desc">Venta por mayor, bulto cerrado, provisión industrial y logística
+                      programada de distribución.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="branch-actions">
+                <a href="https://maps.app.goo.gl/dnDrXabBxdUQSrgG8" target="_blank" rel="noopener noreferrer"
+                  class="btn btn-outline btn-branch-maps" aria-label="Ver Sucursal Sauce Viejo en Google Maps">
+                  <span>🗺️ Ver en Google Maps</span>
+                </a>
+                <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20un%20pedido%20mayorista%20en%20Sucursal%20Sauce%20Viejo"
+                  target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-branch-wa"
+                  aria-label="Consultar por WhatsApp a Sucursal Sauce Viejo">
+                  <span>📦 WhatsApp Mayorista</span>
+                </a>
+              </div>
+            </article>
           </div>
+
         </div>
       </div>
     </section>
@@ -364,7 +443,23 @@
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="catalogo.html">Catálogo con Carrito</a></li>
             <li><a href="#marcas">Marcas Oficiales</a></li>
-            <li><a href="#contacto">Contacto y Redes</a></li>
+            <li><a href="#contacto">Sucursales y Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col-branches">
+          <h5>Sucursales & Horarios</h5>
+          <ul class="footer-links footer-branches-list">
+            <li>
+              <strong>🏪 Santa Fe (Minorista):</strong><br>
+              <span>9 de Julio 4854</span><br>
+              <span class="footer-schedule-badge">Lun a Vie de 7:30 a 16:30 hs</span>
+            </li>
+            <li style="margin-top: 0.75rem;">
+              <strong>🏭 Sauce Viejo (Mayorista):</strong><br>
+              <span>Ruta 11 km 456</span><br>
+              <span class="footer-schedule-badge">Lun a Vie de 6:00 a 14:00 hs</span>
+            </li>
+
           </ul>
         </div>
         <div class="footer-col">
@@ -376,7 +471,7 @@
                 rel="noopener noreferrer">Instagram Oficial</a></li>
             <li><a href="https://www.facebook.com/DISTSANROQUESRL/?locale=es_LA" target="_blank"
                 rel="noopener noreferrer">Facebook Oficial</a></li>
-            <li><a href="catalogo.html">Pedidos Mayoristas</a></li>
+            <li><a href="catalogo.html">Catálogo Online</a></li>
           </ul>
         </div>
       </div>
@@ -391,7 +486,7 @@
   <div class="floating-whatsapp-wrapper" id="whatsapp-wrapper">
     <div class="whatsapp-tooltip" id="whatsapp-tooltip">
       <span class="tooltip-badge">En línea</span>
-      <p>¿Consultas de precios por bulto cerrado? <strong>¡Escribinos!</strong></p>
+      <p>¿Dudas? <strong>¡Consultanos!</strong></p>
     </div>
     <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20una%20consulta"
       target="_blank" rel="noopener noreferrer" class="floating-whatsapp" aria-label="Contactar por WhatsApp">
@@ -410,9 +505,9 @@
       <span class="mobile-nav-icon">🏠</span>
       <span class="mobile-nav-label">Inicio</span>
     </a>
-    <a href="#nosotros" class="mobile-nav-item" id="mob-nav-nosotros">
-      <span class="mobile-nav-icon">ℹ️</span>
-      <span class="mobile-nav-label">Nosotros</span>
+    <a href="#sucursales" class="mobile-nav-item" id="mob-nav-nosotros">
+      <span class="mobile-nav-icon">🏪</span>
+      <span class="mobile-nav-label">Sucursales</span>
     </a>
     <a href="catalogo.html" class="mobile-nav-item" id="mob-nav-catalogo">
       <span class="mobile-nav-icon">🛒</span>

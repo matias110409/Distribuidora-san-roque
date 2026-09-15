@@ -136,7 +136,7 @@ class ShoppingCart {
   generateWhatsAppOrderUrl(customerName = '', customerNotes = '') {
     if (this.cart.length === 0) return null;
 
-    let message = `Hola Distribuidora San Roque S.R.L.! 👋\nQuisiera realizar el siguiente pedido mayorista:\n\n📦 *DETALLE DEL PEDIDO:*\n`;
+    let message = `Hola Distribuidora San Roque S.R.L.! 👋\nQuisiera realizar el siguiente pedido:\n\n📦 *DETALLE DEL PEDIDO:*\n`;
 
     this.cart.forEach((item) => {
       message += `• *${item.quantity}x* ${item.name} (${item.brand} - ${item.presentation})\n`;
