@@ -8,12 +8,15 @@
   <meta name="description"
     content="Distribución mayorista de materias primas para panaderías, confiterías y repostería. Distribuidores oficiales de Calsa, Ledevit, Mapsa y marcas líderes en el país.">
 
-  <!-- Google Fonts: Montserrat + Outfit (títulos) + Inter (cuerpo) [Stitch Design System] -->
+  <!-- Google Fonts: Outfit (Display & Titulares) + Inter (Cuerpo & UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Outfit:wght@600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap"
     rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="imagenes de pagina/logo sin fondo.png">
 
   <!-- Estilos CSS -->
   <link rel="stylesheet" href="css/style.css">
@@ -47,19 +50,20 @@
 
       <nav>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="#inicio" class="nav-link">Inicio</a></li>
+          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
           <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
           <li><a href="catalogo.html" class="nav-link nav-link-catalogo">Catálogo <span class="nav-pill-badge">🛒
                 Carrito</span></a></li>
           <li><a href="#marcas" class="nav-link">Marcas</a></li>
           <li><a href="#servicios" class="nav-link">Logística</a></li>
           <li><a href="#contacto" class="nav-link">Contacto</a></li>
+          <span class="nav-sliding-indicator" id="nav-sliding-indicator" aria-hidden="true"></span>
         </ul>
       </nav>
 
       <div class="header-cta">
         <a href="catalogo.html" class="btn btn-primary btn-sm">Ver Catálogo & Pedir</a>
-        <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Abrir menú de navegación">
+        <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-menu">
           ☰
         </button>
       </div>
@@ -68,41 +72,87 @@
 
   <!-- Main Content -->
   <main id="inicio">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="grain-overlay"></div>
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-logo-badge">
-            <img src="imagenes de pagina/logo.jpg" alt="Distribuidora San Roque S.R.L." class="hero-logo-img">
+    <!-- Hero Section Carousel 3D (Stitch Artisanal Supply Showcase) -->
+    <section class="hero-carousel-section" id="hero-carousel" style="background-color: #1A538C;"
+      aria-label="Destacados San Roque">
+      <div class="hero-carousel-container">
+        <!-- 1. Grain overlay SVG fractalNoise -->
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
+
+        <!-- Logo de Fondo / Marca de Agua a la Izquierda (Detrás de textos y productos) -->
+        <div class="hero-bg-watermark" id="hero-bg-watermark" aria-hidden="true">
+          <img src="imagenes de pagina/logo sin fondo.png" alt="" class="hero-bg-watermark-img">
+        </div>
+
+        <!-- 2. Brand Typographic Lockup (Distribuidora / SAN ROQUE / S.R.L.) -->
+        <h1 class="hero-ghost-text hero-brand-lockup" id="hero-ghost-text">
+          <span class="hero-lockup-prefix">DISTRIBUIDORA</span>
+          <span class="hero-lockup-main">SAN ROQUE</span>
+          <span class="hero-lockup-suffix">
+            <span class="hero-lockup-line" aria-hidden="true"></span>
+            <span>S.R.L.</span>
+            <span class="hero-lockup-line" aria-hidden="true"></span>
+          </span>
+        </h1>
+
+        <!-- 3. Top-left brand label -->
+        <div class="hero-brand-label">MATERIA PRIMA • SANTA FE</div>
+
+        <!-- 4. Carousel 3D Stage with the 3 PNG products -->
+        <div class="hero-carousel-stage" id="hero-carousel-stage">
+          <!-- Item 0: Pan Dulce & Rosca (Center inicial - Azul) -->
+          <div class="hero-carousel-item role-center" data-index="0" id="carousel-item-0">
+            <img src="imagenes de pagina/premezcla-pan-dulce-rosca-linea-de-plata-Photoroom.png"
+              alt="Premezcla Pan Dulce y Rosca Línea de Plata 3kg" draggable="false">
           </div>
-          <h1 class="hero-title">
-            Materia prima para <span>panaderías y confiterías</span>
-          </h1>
-          <p class="hero-desc">
-            Abastecemos a panaderías, confiterías y emprendimientos gastronómicos con insumos de primera calidad, stock
-            permanente y logística coordinada directo a tu negocio.
-          </p>
-          <div class="hero-buttons">
-            <a href="catalogo.html" class="btn btn-secondary">Explorar Catálogo con Carrito 🛒</a>
-            <a href="#contacto" class="btn btn-outline" style="border-color: #fff; color: #fff;">Comunícate con
-              Nosotros</a>
+          <!-- Item 1: Brownies (Right inicial - Rojo) -->
+          <div class="hero-carousel-item role-right" data-index="1" id="carousel-item-1">
+            <img src="imagenes de pagina/Innova_Brownies_Nuevo-Photoroom.png"
+              alt="Premezcla Brownies Innova 360 Calsa 3kg" draggable="false">
           </div>
-          <div class="hero-features">
-            <div class="hero-feature-item">
-              <span class="hero-feature-num" data-target="40" data-prefix="+" data-suffix="">+40</span>
-              <span class="hero-feature-text">Años acompañando a maestros panaderos</span>
-            </div>
-            <div class="hero-feature-item">
-              <span class="hero-feature-num" data-target="100" data-prefix="" data-suffix="%">100%</span>
-              <span class="hero-feature-text">Marcas líderes y calidad certificada</span>
-            </div>
-            <div class="hero-feature-item">
-              <span class="hero-feature-num" data-target="24" data-prefix="< " data-suffix=" hs">
-                < 24 hs</span>
-                  <span class="hero-feature-text">Envíos programados a tu local</span>
-            </div>
+          <!-- Item 2: Muffins Vainilla (Left inicial - Amarillo) -->
+          <div class="hero-carousel-item role-left" data-index="2" id="carousel-item-2">
+            <img src="imagenes de pagina/Innova_Muffins_de_Vainilla_Nuevo-Photoroom.png"
+              alt="Premezcla Muffins de Vainilla Innova 360 Calsa 3kg" draggable="false">
           </div>
+        </div>
+
+        <!-- 5. Bottom-left text + nav buttons -->
+        <div class="hero-bottom-left">
+          <div class="hero-product-meta" id="hero-product-meta">
+            <p class="hero-product-title" id="hero-product-title">PAN DULCE & ROSCA</p>
+            <p class="hero-product-desc" id="hero-product-desc">
+              Premezcla premium para elaboración artesanal de panes dulces y roscas con máxima terneza, volumen y frescura.
+            </p>
+          </div>
+          <div class="hero-nav-buttons">
+            <button type="button" class="hero-nav-btn" id="hero-prev-btn" aria-label="Producto anterior">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+              </svg>
+            </button>
+            <button type="button" class="hero-nav-btn" id="hero-next-btn" aria-label="Siguiente producto">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. Bottom-right link "DISCOVER IT" -->
+        <div class="hero-bottom-right">
+          <a href="catalogo.html" class="hero-discover-link" id="hero-discover-link">
+            <span>DESCUBRÍ MÁS</span>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -110,6 +160,21 @@
     <!-- Sobre Nosotros -->
     <section id="nosotros" class="about-section">
       <div class="container">
+        <!-- Barra de Estadísticas y Confianza (+40 años, 100% Calidad, <24hs) -->
+        <div class="about-stats-bar hero-features animate-on-scroll animate-fade-up">
+          <div class="hero-feature-item">
+            <span class="hero-feature-num" data-target="40" data-prefix="+" data-suffix="">+40</span>
+            <span class="hero-feature-text">Años acompañando a maestros panaderos</span>
+          </div>
+          <div class="hero-feature-item">
+            <span class="hero-feature-num" data-target="100" data-prefix="" data-suffix="%">100%</span>
+            <span class="hero-feature-text">Marcas líderes y calidad certificada</span>
+          </div>
+          <div class="hero-feature-item">
+            <span class="hero-feature-num" data-target="24" data-prefix="&lt; " data-suffix=" hs">&lt; 24 hs</span>
+            <span class="hero-feature-text">Envíos programados a tu local</span>
+          </div>
+        </div>
         <div class="about-grid">
           <div class="about-images-wrapper animate-on-scroll animate-slide-right">
             <img src="imagenes de pagina/imagen de local.jpg" alt="Instalaciones de Distribuidora San Roque"
@@ -165,21 +230,25 @@
         </div>
         <div class="features-grid animate-on-scroll animate-stagger">
           <div class="feature-box">
-            <div class="feature-icon-wrapper">🚚</div>
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-5l-3-4h-5v10"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            </div>
             <h4>Logística y Entrega Programada</h4>
             <p>Rutas organizadas para que tus insumos lleguen justo antes de que inicies tu ciclo de producción.</p>
           </div>
           <div class="feature-box">
-            <div class="feature-icon-wrapper">❄️</div>
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="20" y1="12" x2="4" y2="12"/><line x1="17.65" y1="6.35" x2="6.35" y2="17.65"/><line x1="17.65" y1="17.65" x2="6.35" y2="6.35"/><polyline points="10 4 12 2 14 4"/><polyline points="10 20 12 22 14 20"/><polyline points="4 10 2 12 4 14"/><polyline points="20 10 22 12 20 14"/></svg>
+            </div>
             <h4>Cuidado de Cadena de Frío</h4>
-            <p>Vehículos e instalaciones equipadas para conservar levaduras, margarinas y lácteos con la temperatura
-              óptima.</p>
+            <p>Vehículos e instalaciones equipadas para conservar levaduras, margarinas y lácteos con la temperatura óptima.</p>
           </div>
           <div class="feature-box">
-            <div class="feature-icon-wrapper">💼</div>
+            <div class="feature-icon-wrapper" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
             <h4>Atención Personalizada Mayorista</h4>
-            <p>Asesores comerciales dedicados a brindarte cotizaciones a medida y soluciones para compras por volumen.
-            </p>
+            <p>Asesores comerciales dedicados a brindarte cotizaciones a medida y soluciones para compras por volumen.</p>
           </div>
         </div>
       </div>
@@ -313,7 +382,9 @@
             <article class="branch-card branch-card-retail">
               <div class="branch-card-header">
                 <div class="branch-tag-pill branch-tag-retail">
-                  <span class="branch-tag-icon">🏪</span>
+                  <span class="branch-tag-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+                  </span>
                   <span>Venta Minorista</span>
                 </div>
                 <h4 class="branch-name">Sucursal Santa Fe</h4>
@@ -323,7 +394,9 @@
 
               <div class="branch-details-list">
                 <div class="branch-detail-item">
-                  <div class="branch-detail-icon">📍</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Dirección</span>
                     <strong class="branch-detail-value">9 de Julio 4854, Santa Fe.</strong>
@@ -331,7 +404,9 @@
                 </div>
 
                 <div class="branch-detail-item branch-detail-highlight">
-                  <div class="branch-detail-icon">⏰</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Horario de Atención</span>
                     <strong class="branch-detail-value">Lunes a Viernes de 7:30 a 16:30 hs</strong>
@@ -339,7 +414,9 @@
                 </div>
 
                 <div class="branch-detail-item">
-                  <div class="branch-detail-icon">🛍️</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Modalidad de Venta</span>
                     <span class="branch-detail-desc">Venta por menor, fraccionado, insumos para repostería y atención
@@ -352,12 +429,14 @@
                 <a href="https://www.google.com/maps/search/?api=1&query=9+de+Julio+4854%2C+Santa+Fe%2C+Argentina"
                   target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-branch-maps"
                   aria-label="Ver Sucursal Santa Fe en Google Maps">
-                  <span>🗺️ Ver en Google Maps</span>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                  <span>Ver en Google Maps</span>
                 </a>
                 <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20consultar%20por%20venta%20minorista%20en%20Sucursal%20Santa%20Fe"
                   target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-branch-wa"
                   aria-label="Consultar por WhatsApp a Sucursal Santa Fe">
-                  <span>💬 WhatsApp Minorista</span>
+                  <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  <span>WhatsApp Minorista</span>
                 </a>
               </div>
             </article>
@@ -366,7 +445,9 @@
             <article class="branch-card branch-card-wholesale">
               <div class="branch-card-header">
                 <div class="branch-tag-pill branch-tag-wholesale">
-                  <span class="branch-tag-icon">🏭</span>
+                  <span class="branch-tag-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>
+                  </span>
                   <span>Venta Mayorista</span>
                 </div>
                 <h4 class="branch-name">Sucursal Sauce Viejo</h4>
@@ -375,7 +456,9 @@
 
               <div class="branch-details-list">
                 <div class="branch-detail-item">
-                  <div class="branch-detail-icon">📍</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Dirección</span>
                     <strong class="branch-detail-value">Ruta 11 km 456, Sauce Viejo.</strong>
@@ -383,7 +466,9 @@
                 </div>
 
                 <div class="branch-detail-item branch-detail-highlight">
-                  <div class="branch-detail-icon">⏰</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Horario de Despacho</span>
                     <strong class="branch-detail-value">Lunes a Viernes de 6:00 a 14:00 hs</strong>
@@ -391,7 +476,9 @@
                 </div>
 
                 <div class="branch-detail-item">
-                  <div class="branch-detail-icon">📦</div>
+                  <div class="branch-detail-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                  </div>
                   <div class="branch-detail-info">
                     <span class="branch-detail-label">Modalidad de Venta</span>
                     <span class="branch-detail-desc">Venta por mayor, bulto cerrado, provisión industrial y logística
@@ -403,12 +490,14 @@
               <div class="branch-actions">
                 <a href="https://maps.app.goo.gl/dnDrXabBxdUQSrgG8" target="_blank" rel="noopener noreferrer"
                   class="btn btn-outline btn-branch-maps" aria-label="Ver Sucursal Sauce Viejo en Google Maps">
-                  <span>🗺️ Ver en Google Maps</span>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                  <span>Ver en Google Maps</span>
                 </a>
                 <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20un%20pedido%20mayorista%20en%20Sucursal%20Sauce%20Viejo"
                   target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-branch-wa"
                   aria-label="Consultar por WhatsApp a Sucursal Sauce Viejo">
-                  <span>📦 WhatsApp Mayorista</span>
+                  <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  <span>WhatsApp Mayorista</span>
                 </a>
               </div>
             </article>
@@ -424,11 +513,11 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="brand-logo" style="margin-bottom: 1rem;">
+          <div class="brand-logo">
             <img src="imagenes de pagina/logo.jpg" alt="Distribuidora San Roque Logo" class="logo-img logo-img-footer">
             <div class="logo-text">
-              <span class="logo-title" style="color: #fff;">SAN ROQUE</span>
-              <span class="logo-subtitle" style="color: #ffd466;">DISTRIBUIDORA S.R.L.</span>
+              <span class="logo-title">SAN ROQUE</span>
+              <span class="logo-subtitle">DISTRIBUIDORA S.R.L.</span>
             </div>
           </div>
           <p>
@@ -450,12 +539,12 @@
           <h5>Sucursales & Horarios</h5>
           <ul class="footer-links footer-branches-list">
             <li>
-              <strong>🏪 Santa Fe (Minorista):</strong><br>
+              <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>Santa Fe (Minorista):</strong><br>
               <span>9 de Julio 4854</span><br>
               <span class="footer-schedule-badge">Lun a Vie de 7:30 a 16:30 hs</span>
             </li>
-            <li style="margin-top: 0.75rem;">
-              <strong>🏭 Sauce Viejo (Mayorista):</strong><br>
+            <li>
+              <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>Sauce Viejo (Mayorista):</strong><br>
               <span>Ruta 11 km 456</span><br>
               <span class="footer-schedule-badge">Lun a Vie de 6:00 a 14:00 hs</span>
             </li>
@@ -502,24 +591,34 @@
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación Móvil">
     <a href="#inicio" class="mobile-nav-item active" id="mob-nav-inicio">
-      <span class="mobile-nav-icon">🏠</span>
+      <span class="mobile-nav-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </span>
       <span class="mobile-nav-label">Inicio</span>
     </a>
     <a href="#sucursales" class="mobile-nav-item" id="mob-nav-nosotros">
-      <span class="mobile-nav-icon">🏪</span>
+      <span class="mobile-nav-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+      </span>
       <span class="mobile-nav-label">Sucursales</span>
     </a>
     <a href="catalogo.html" class="mobile-nav-item" id="mob-nav-catalogo">
-      <span class="mobile-nav-icon">🛒</span>
+      <span class="mobile-nav-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      </span>
       <span class="mobile-nav-label">Catálogo</span>
     </a>
     <a href="#contacto" class="mobile-nav-item" id="mob-nav-contacto">
-      <span class="mobile-nav-icon">📍</span>
+      <span class="mobile-nav-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      </span>
       <span class="mobile-nav-label">Contacto</span>
     </a>
     <a href="https://wa.me/5491112345678?text=Hola%20Distribuidora%20San%20Roque%2C%20quisiera%20hacer%20un%20pedido"
       target="_blank" rel="noopener noreferrer" class="mobile-nav-item mobile-nav-wa" id="mob-nav-wa">
-      <span class="mobile-nav-icon">💬</span>
+      <span class="mobile-nav-icon" aria-hidden="true">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      </span>
       <span class="mobile-nav-label">Pedir</span>
     </a>
   </nav>
@@ -531,6 +630,7 @@
   <script src="js/products-data.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/hero-carousel.js"></script>
 </body>
 
 </html>

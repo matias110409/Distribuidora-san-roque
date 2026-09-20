@@ -190,28 +190,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = `catalogo.html?cat=${encodeURIComponent(keyword)}`;
   };
 
-  // Animaciones bidireccionales en Scroll (aparecen al bajar, desaparecen al subir y vuelven a aparecer al bajar)
+  // Animaciones de entrada en Scroll (persisten una vez reveladas para evitar parpadeos al volver a subir)
   function setupScrollAnimations() {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     if (!animatedElements.length) return;
 
-    const scrollObserver = new IntersectionObserver((entries) => {
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-        } else {
-          entry.target.classList.remove('revealed');
+          observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.12,
+      rootMargin: '0px 0px -30px 0px'
     });
 
     animatedElements.forEach(el => scrollObserver.observe(el));
   }
-
-
 
   // Tooltip Interactivo de WhatsApp
   const whatsappTooltip = document.getElementById('whatsapp-tooltip');
@@ -221,17 +218,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Menú móvil
+  // Menú móvil accesible con soporte para ARIA y Escape
   if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-    });
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    mobileToggle.setAttribute('aria-controls', 'nav-menu');
+
+    const toggleMenu = (open) => {
+      const shouldOpen = typeof open === 'boolean' ? open : !navMenu.classList.contains('open');
+      navMenu.classList.toggle('open', shouldOpen);
+      mobileToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+    };
+
+    mobileToggle.addEventListener('click', () => toggleMenu());
 
     // Cerrar al clickear enlaces
     navMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-      });
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Cerrar al pulsar tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+        toggleMenu(false);
+        mobileToggle.focus();
+      }
     });
   }
 
@@ -245,31 +255,213 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Mobile Bottom Navigation Bar: sincronizar pestaña activa según scroll
-  const mobileNavItems = document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item:not(.mobile-nav-wa)');
-  const sectionsToTrack = [
-    { id: 'inicio', navItem: document.getElementById('mob-nav-inicio') },
-    { id: 'nosotros', navItem: document.getElementById('mob-nav-nosotros') },
-    { id: 'contacto', navItem: document.getElementById('mob-nav-contacto') }
-  ];
+  // ==========================================================================
+  // ScrollSpy & Indicador Animado Deslizante de la Barra Superior
+  // ==========================================================================
+  function setupNavScrollSpy() {
+    const navMenu = document.getElementById('nav-menu');
+    const indicator = document.getElementById('nav-sliding-indicator');
+    if (!navMenu) return;
 
-  window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY + 220;
-    sectionsToTrack.forEach(section => {
-      const el = document.getElementById(section.id);
-      if (el && section.navItem) {
-        const top = el.offsetTop;
-        const height = el.offsetHeight;
-        if (scrollPosition >= top && scrollPosition < top + height) {
-          mobileNavItems.forEach(item => item.classList.remove('active'));
-          section.navItem.classList.add('active');
+    // Secciones a rastrear en la página de inicio
+    const SECTIONS = [
+      { id: 'inicio', link: navMenu.querySelector('a[href="#inicio"]') },
+      { id: 'nosotros', link: navMenu.querySelector('a[href="#nosotros"]') },
+      { id: 'marcas', link: navMenu.querySelector('a[href="#marcas"]') },
+      { id: 'servicios', link: navMenu.querySelector('a[href="#servicios"]') },
+      { id: 'contacto', link: navMenu.querySelector('a[href="#contacto"]') }
+    ];
+
+    // Sincronización con barra inferior móvil
+    const mobileMap = {
+      'inicio': document.getElementById('mob-nav-inicio'),
+      'nosotros': document.getElementById('mob-nav-nosotros'),
+      'contacto': document.getElementById('mob-nav-contacto')
+    };
+    const mobileNavItems = document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item:not(.mobile-nav-wa)');
+
+    let currentActiveId = 'inicio';
+    let isTicking = false;
+
+    // Desplazar el indicador animado hacia el link activo
+    function updateIndicatorPosition(activeLink, animate = true) {
+      if (!indicator || !activeLink) return;
+
+      // Ocultar si la ventana es móvil
+      if (window.innerWidth <= 900) {
+        indicator.style.opacity = '0';
+        return;
+      }
+
+      const navRect = navMenu.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+
+      const left = linkRect.left - navRect.left;
+      const top = linkRect.top - navRect.top + linkRect.height - 2;
+      const width = linkRect.width;
+
+      if (!animate) {
+        indicator.style.transition = 'none';
+      } else {
+        indicator.style.transition = 'transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), width 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease';
+      }
+
+      indicator.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+      indicator.style.width = `${width}px`;
+      indicator.style.opacity = '1';
+    }
+
+    // Activar una sección y actualizar el indicador
+    function setActiveSection(sectionId, animate = true) {
+      currentActiveId = sectionId;
+
+      let matchedLink = null;
+      SECTIONS.forEach(item => {
+        if (item.link) {
+          if (item.id === sectionId) {
+            item.link.classList.add('active');
+            matchedLink = item.link;
+          } else {
+            item.link.classList.remove('active');
+          }
+        }
+      });
+
+      if (matchedLink) {
+        updateIndicatorPosition(matchedLink, animate);
+      }
+
+      // Sincronizar barra inferior móvil
+      if (mobileMap[sectionId]) {
+        mobileNavItems.forEach(item => item.classList.remove('active'));
+        mobileMap[sectionId].classList.add('active');
+      }
+    }
+
+    // Determinar la sección visible con delta de scroll
+    function getSectionInView() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // 1. Tope de página
+      if (scrollY < 120) {
+        return 'inicio';
+      }
+
+      // 2. Fondo de página (Contacto y Footer)
+      if (scrollY + windowHeight >= docHeight - 80) {
+        return 'contacto';
+      }
+
+      // 3. Revisar cada sección por posición relativa
+      const offset = 140;
+      let active = 'inicio';
+
+      for (const section of SECTIONS) {
+        const el = document.getElementById(section.id);
+        if (el) {
+          const top = el.offsetTop - offset;
+          if (scrollY >= top) {
+            active = section.id;
+          }
         }
       }
+
+      return active;
+    }
+
+    function onScroll() {
+      if (!isTicking) {
+        requestAnimationFrame(() => {
+          const activeId = getSectionInView();
+          if (activeId !== currentActiveId) {
+            setActiveSection(activeId, true);
+          }
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // En resize recalculamos posición sin animación
+    window.addEventListener('resize', () => {
+      const activeItem = SECTIONS.find(item => item.id === currentActiveId);
+      if (activeItem && activeItem.link) {
+        updateIndicatorPosition(activeItem.link, false);
+      }
+    }, { passive: true });
+
+    // Respuesta inmediata a los clics en los enlaces
+    SECTIONS.forEach(item => {
+      if (item.link) {
+        item.link.addEventListener('click', () => {
+          setActiveSection(item.id, true);
+        });
+      }
     });
-  });
+
+    // Ajuste al cargar fuentes
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        const activeItem = SECTIONS.find(item => item.id === currentActiveId);
+        if (activeItem && activeItem.link) {
+          updateIndicatorPosition(activeItem.link, false);
+        }
+      });
+    }
+
+    // Inicializar posición
+    const initialId = getSectionInView();
+    setActiveSection(initialId, false);
+  }
+
+  // Control de visibilidad del botón flotante de WhatsApp:
+  // Oculto en la pantalla inicial (hero), aparece suavemente a partir del
+  // bloque de "Nosotros" y se mantiene para toda la parte inferior.
+  // Al volver a subir por encima de "Nosotros", se esconde de nuevo.
+  function setupWhatsAppVisibility() {
+    const waWrapper = document.getElementById('whatsapp-wrapper');
+    const nosotrosSection = document.getElementById('nosotros');
+    if (!waWrapper || !nosotrosSection) return;
+
+    let ticking = false;
+
+    function updateWhatsAppVisibility() {
+      const rect = nosotrosSection.getBoundingClientRect();
+      // Aparece cuando el bloque de Nosotros entra en la pantalla (al 65% de la ventana)
+      const isPastNosotros = rect.top <= (window.innerHeight * 0.65);
+
+      if (isPastNosotros) {
+        waWrapper.classList.add('is-visible');
+      } else {
+        waWrapper.classList.remove('is-visible');
+      }
+      ticking = false;
+    }
+
+    function onScrollOrResize() {
+      if (!ticking) {
+        requestAnimationFrame(updateWhatsAppVisibility);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    // Verificación inicial por si la página carga con scroll o hash
+    updateWhatsAppVisibility();
+  }
 
   // Inicializar
   renderBrands();
   setupAnimatedCounters();
   setupScrollAnimations();
+  setupWhatsAppVisibility();
+  setupNavScrollSpy();
 });
+
+
