@@ -203,14 +203,29 @@ const PRODUCTS = [
 ];
 
 const BRANDS = [
+  // Primer bloque (6 marcas principales requeridas)
   { name: "Calsa", logo: "logotipos-empresas/Calsa-logo.png" },
-  { name: "Ledevit", logo: "logotipos-empresas/insta_logo-Photoroom.png" },
   { name: "Mapsa", logo: "logotipos-empresas/Mapsa-logo.png" },
+  { name: "Ledevit", logo: "logotipos-empresas/Levedit-Logo.png" },
+  { name: "C.G.A", logo: "logotipos-empresas/C.G.A-Logo.png" },
   { name: "San Ignacio", logo: "logotipos-empresas/Sanignacio-logo.png" },
-  { name: "Grabich", logo: "logotipos-empresas/9a5d84f6-3acf-4e5c-b62e-27db139fa032-AQExwbMjn8H3Wl2J-Photoroom.png" },
-  { name: "Lheritier", logo: "logotipos-empresas/2c2b47130276615.Y3JvcCwzMTcxLDI0ODEsMTY0LDA-Photoroom.png" },
-  { name: "Argentfrut", logo: "logotipos-empresas/argenfrut-logo.png" },
-  { name: "Tío Lucas", logo: "logotipos-empresas/TIOLUCAS-logo.PNG" }
+  { name: "Rich's", logo: "logotipos-empresas/Richs-Logo.png" },
+
+  // Segundo bloque (6 marcas)
+  { name: "Grabich", logo: "logotipos-empresas/Grabich-Logo.png" },
+  { name: "Lheritier", logo: "logotipos-empresas/Lheritier-Logo.png" },
+  { name: "Argenfrut", logo: "logotipos-empresas/argenfrut-logo.png" },
+  { name: "Tío Lucas", logo: "logotipos-empresas/TIOLUCAS-logo.PNG" },
+  { name: "Molino Victoria", logo: "logotipos-empresas/MolinoVictoria-Logo.png" },
+  { name: "Molinos Cañuelas", logo: "logotipos-empresas/MolinosCañuelas-Logo.png" },
+
+  // Tercer bloque (6 marcas)
+  { name: "Extra Boero", logo: "logotipos-empresas/ExtraBoero-Logo.png" },
+  { name: "Orieta", logo: "logotipos-empresas/Orieta-Logo.png" },
+  { name: "Prindal", logo: "logotipos-empresas/Prindal-Logo.png" },
+  { name: "Santa María", logo: "logotipos-empresas/SantaMaria-Logo.png" },
+  { name: "Taxonera", logo: "logotipos-empresas/Taxonera-logo.png" },
+  { name: "Glutal", logo: "logotipos-empresas/glutal-logo.png" }
 ];
 
 if (typeof window !== 'undefined') {

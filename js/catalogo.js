@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('product-search');
   const filterButtons = document.querySelectorAll('.filter-btn');
   const totalProductsCountEl = document.getElementById('total-products-count');
-  
+
   // Elementos del Carrito Drawer
   const cartDrawer = document.getElementById('cart-drawer');
   const cartOverlay = document.getElementById('cart-overlay');
@@ -76,12 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchQuery.toLowerCase().trim();
     const filtered = PRODUCTS.filter(p => {
       const matchCategory = currentCategory === 'all' || p.category === currentCategory;
-      const matchSearch = query === '' || 
+      const matchSearch = query === '' ||
         p.name.toLowerCase().includes(query) ||
         p.brand.toLowerCase().includes(query) ||
         p.description.toLowerCase().includes(query) ||
         (p.tags && p.tags.some(t => t.toLowerCase().includes(query)));
-      
+
       return matchCategory && matchSearch;
     });
 
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Función global para cambiar cantidad en los selectores de las tarjetas
-  window.changeQty = function(buttonEl, delta) {
+  window.changeQty = function (buttonEl, delta) {
     const selector = buttonEl.closest('.qty-selector');
     const input = selector.querySelector('.qty-input');
     let val = parseInt(input.value, 10) || 1;
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Función global para agregar producto al carrito desde la tarjeta
-  window.addProductToCart = function(productId, buttonEl) {
+  window.addProductToCart = function (productId, buttonEl) {
     if (!buttonEl) return;
     const card = buttonEl.closest('.product-card');
     const qtyInput = card ? card.querySelector('.qty-input') : null;
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cartItemsList.innerHTML = '';
       if (cartDrawerEmpty) cartDrawerEmpty.style.display = 'block';
       if (cartDrawerFooter) cartDrawerFooter.style.display = 'none';
-      if (cartTotalQtyEl) cartTotalQtyEl.textContent = '0 bultos';
+      if (cartTotalQtyEl) cartTotalQtyEl.textContent = '0 productos';
       return;
     }
 
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Modal de Detalles de Producto
-  window.openProductModal = function(productId) {
+  window.openProductModal = function (productId) {
     const p = PRODUCTS.find(prod => prod.id === productId);
     if (!p) return;
 
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modalCategory.textContent = formatCategory(p.category);
     modalPresentation.textContent = p.presentation;
     modalDescription.textContent = p.description;
-    
+
     if (modalQtyInput) modalQtyInput.value = 1;
 
     const waText = encodeURIComponent(`Hola Distribuidora San Roque! Quisiera consultar precio y stock de: ${p.name} (${p.brand} - ${p.presentation}).`);

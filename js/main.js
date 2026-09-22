@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const productsGrid = document.getElementById('products-grid');
   const searchInput = document.getElementById('product-search');
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const brandsGrid = document.getElementById('brands-grid');
   
   // Elementos del Modal
   const modal = document.getElementById('product-modal');
@@ -103,14 +102,168 @@ document.addEventListener('DOMContentLoaded', () => {
     return map[cat] || cat;
   }
 
-  // Renderizar Marcas con Logotipos y Animación Stagger
-  function renderBrands() {
-    if (!brandsGrid || typeof BRANDS === 'undefined') return;
-    brandsGrid.innerHTML = BRANDS.map((b, index) => `
-      <div class="brand-card animate-on-scroll animate-fade-up" style="transition-delay: ${index * 0.1}s;">
-        <img src="${b.logo}" alt="Logo ${b.name}" loading="lazy">
-      </div>
-    `).join('');
+  // ==========================================================================
+  // Carrusel de Marcas (Bloques de a 6 marcas con flechas laterales y paginación)
+  // ==========================================================================
+  function setupBrandsCarousel() {
+    const track = document.getElementById('brands-track');
+    const viewport = document.getElementById('brands-viewport');
+    const prevBtn = document.getElementById('brands-prev-btn');
+    const nextBtn = document.getElementById('brands-next-btn');
+    const pagination = document.getElementById('brands-pagination');
+
+    if (!track || typeof BRANDS === 'undefined' || !BRANDS.length) return;
+
+    const BRANDS_PER_PAGE = 6;
+    const totalPages = Math.ceil(BRANDS.length / BRANDS_PER_PAGE);
+    let currentBlock = 0;
+
+    // 1. Renderizar páginas / bloques de 6 marcas
+    let pagesHTML = '';
+    for (let p = 0; p < totalPages; p++) {
+      const pageBrands = BRANDS.slice(p * BRANDS_PER_PAGE, (p + 1) * BRANDS_PER_PAGE);
+      pagesHTML += `
+        <div class="brands-page ${p === 0 ? 'active-page' : ''}" role="group" aria-roledescription="slide" aria-label="Bloque ${p + 1} de ${totalPages}">
+          <div class="brands-grid">
+            ${pageBrands.map(b => `
+              <div class="brand-card">
+                <img src="${b.logo}" alt="Logo de ${b.name}" loading="lazy">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    track.innerHTML = pagesHTML;
+
+    // 2. Renderizar indicadores de paginación (dots)
+    if (pagination && totalPages > 1) {
+      pagination.innerHTML = Array.from({ length: totalPages }, (_, i) => `
+        <button type="button" class="brands-dot ${i === 0 ? 'active' : ''}" 
+          role="tab" 
+          aria-selected="${i === 0 ? 'true' : 'false'}" 
+          aria-label="Ir al bloque ${i + 1} de marcas" 
+          data-block="${i}">
+        </button>
+      `).join('');
+    }
+
+    // 3. Actualizar visibilidad de flechas según el bloque actual
+    function updateNavButtons() {
+      const isFirst = currentBlock <= 0;
+      const isLast = currentBlock >= totalPages - 1;
+
+      if (prevBtn) {
+        prevBtn.classList.toggle('is-hidden', isFirst);
+        prevBtn.setAttribute('tabindex', isFirst ? '-1' : '0');
+        prevBtn.setAttribute('aria-hidden', isFirst ? 'true' : 'false');
+        prevBtn.disabled = isFirst;
+      }
+
+      if (nextBtn) {
+        nextBtn.classList.toggle('is-hidden', isLast);
+        nextBtn.setAttribute('tabindex', isLast ? '-1' : '0');
+        nextBtn.setAttribute('aria-hidden', isLast ? 'true' : 'false');
+        nextBtn.disabled = isLast;
+      }
+    }
+
+    // 4. Cambiar de bloque con animación suave y delimitada
+    function goToBlock(index) {
+      if (index < 0) {
+        currentBlock = 0;
+      } else if (index >= totalPages) {
+        currentBlock = totalPages - 1;
+      } else {
+        currentBlock = index;
+      }
+
+      track.style.transform = `translateX(-${currentBlock * 100}%)`;
+
+      // Activar clase active-page en el bloque actual para disparar la animación en cascada de sus logos
+      const pages = track.querySelectorAll('.brands-page');
+      pages.forEach((page, idx) => {
+        page.classList.toggle('active-page', idx === currentBlock);
+      });
+
+      if (pagination) {
+        const dots = pagination.querySelectorAll('.brands-dot');
+        dots.forEach((dot, idx) => {
+          const isActive = idx === currentBlock;
+          dot.classList.toggle('active', isActive);
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+      }
+
+      updateNavButtons();
+    }
+
+    // 5. Navegación con flechas a los costados
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentBlock > 0) {
+          goToBlock(currentBlock - 1);
+        }
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (currentBlock < totalPages - 1) {
+          goToBlock(currentBlock + 1);
+        }
+      });
+    }
+
+    // 6. Clic en los dots
+    if (pagination) {
+      pagination.addEventListener('click', (e) => {
+        const targetDot = e.target.closest('.brands-dot');
+        if (targetDot) {
+          const blockIdx = parseInt(targetDot.getAttribute('data-block'), 10);
+          if (!isNaN(blockIdx)) {
+            goToBlock(blockIdx);
+          }
+        }
+      });
+    }
+
+    // 7. Gestos táctiles (Swipe en móviles)
+    if (viewport) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      viewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', (e) => {
+        const diffX = e.changedTouches[0].screenX - touchStartX;
+        const diffY = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0 && currentBlock < totalPages - 1) {
+            goToBlock(currentBlock + 1);
+          } else if (diffX > 0 && currentBlock > 0) {
+            goToBlock(currentBlock - 1);
+          }
+        }
+      }, { passive: true });
+    }
+
+    // 8. Navegación por teclado en el contenedor de marcas
+    const container = document.querySelector('.brands-carousel-container');
+    if (container) {
+      container.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && currentBlock > 0) {
+          goToBlock(currentBlock - 1);
+        } else if (e.key === 'ArrowRight' && currentBlock < totalPages - 1) {
+          goToBlock(currentBlock + 1);
+        }
+      });
+    }
+
+    // 9. Estado inicial de las flechas
+    updateNavButtons();
   }
 
   // Sistema de Notificaciones Toast Dinámicas
@@ -190,16 +343,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = `catalogo.html?cat=${encodeURIComponent(keyword)}`;
   };
 
-  // Animaciones de entrada en Scroll (persisten una vez reveladas para evitar parpadeos al volver a subir)
+  // Animaciones de entrada en Scroll (se repiten cada vez que el elemento entra en el viewport)
   function setupScrollAnimations() {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     if (!animatedElements.length) return;
 
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
+    const scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
+        } else {
+          entry.target.classList.remove('revealed');
         }
       });
     }, {
@@ -288,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!indicator || !activeLink) return;
 
       // Ocultar si la ventana es móvil
-      if (window.innerWidth <= 900) {
+      if (window.innerWidth <= 920) {
         indicator.style.opacity = '0';
         return;
       }
@@ -457,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Inicializar
-  renderBrands();
+  setupBrandsCarousel();
   setupAnimatedCounters();
   setupScrollAnimations();
   setupWhatsAppVisibility();
