@@ -346,9 +346,9 @@ h4,
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), #f59e0b);
+  background: var(--color-primary);
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(201, 147, 38, 0.45);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.45);
   pointer-events: none;
   opacity: 0;
   width: 0;
@@ -1498,321 +1498,185 @@ section {
 }
 
 /* ==========================================================================
-   Marcas (Carrusel de Bloques de a 6 con Flechas Laterales y Paginación)
+   Marcas (Carrusel Infinito Continuo en 2 Líneas Horizontales)
    ========================================================================== */
 .brands-section {
   background: linear-gradient(180deg, #f1f5fa 0%, #e2eaf5 50%, #ecf2f9 100%);
   position: relative;
   border-bottom: 1px solid #dbe3ed;
   overflow: hidden;
+  padding: 4.5rem 0 5rem;
 }
 
-.brands-carousel-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
+.brands-marquee-wrapper {
   position: relative;
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
-.brands-nav-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1.5px solid rgba(14, 59, 110, 0.14);
-  color: var(--color-primary, #0e3b6e);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(14, 59, 110, 0.08);
-  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.24s ease,
-              visibility 0.24s ease,
-              background-color 0.22s ease,
-              border-color 0.22s ease,
-              color 0.22s ease,
-              box-shadow 0.22s ease;
-  user-select: none;
-  z-index: 5;
-}
-
-.brands-nav-btn.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: scale(0.78);
-  cursor: default;
-}
-
-.brands-nav-btn:hover {
-  transform: scale(1.08);
-  background-color: var(--color-primary, #0e3b6e);
-  color: #ffffff;
-  border-color: var(--color-primary, #0e3b6e);
-  box-shadow: 0 8px 24px rgba(14, 59, 110, 0.22);
-}
-
-.brands-nav-btn:active {
-  transform: scale(0.94);
-}
-
-.brands-nav-btn:focus-visible {
-  outline: 2px solid var(--color-primary, #0e3b6e);
-  outline-offset: 3px;
-}
-
-.brands-carousel-viewport {
-  flex: 1;
+  width: 100%;
   overflow: hidden;
-  border-radius: 18px;
-  width: 100%;
+  margin-top: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  /* Máscara de desvanecimiento suave en los bordes para una entrada y salida circular y fluida */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
-.brands-carousel-track {
+.brands-marquee-row {
   display: flex;
+  overflow: hidden;
   width: 100%;
-  transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  padding: 0.35rem 0;
+}
+
+.brands-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
   will-change: transform;
 }
 
-.brands-page {
-  min-width: 100%;
-  width: 100%;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  padding: 0.35rem 0.4rem;
+/* Fila 1: desplazamiento continuo circular hacia la izquierda */
+.brands-marquee-row[data-direction="left"] .brands-marquee-track {
+  animation: brandsScrollLeft 48s linear infinite;
 }
 
-.brands-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  width: 100%;
+/* Fila 2: desplazamiento continuo circular hacia la derecha */
+.brands-marquee-row[data-direction="right"] .brands-marquee-track {
+  animation: brandsScrollRight 48s linear infinite;
 }
 
-.brand-card {
+/* Pausa suave de la animación al pasar el cursor sobre la fila */
+.brands-marquee-row:hover .brands-marquee-track,
+.brands-marquee-row:focus-within .brands-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Tarjeta individual de marca */
+.brand-marquee-card {
+  flex: 0 0 210px;
+  height: 98px;
   background: #ffffff;
   border: 1px solid rgba(14, 59, 110, 0.08);
-  padding: 1.75rem 1.5rem;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 115px;
-  box-shadow: 0 4px 15px rgba(14, 59, 110, 0.05);
-  filter: grayscale(10%);
-  /* Estado inicial: desplazado ~20px hacia abajo e invisible */
-  opacity: 0;
-  transform: translateY(20px);
-  will-change: transform, opacity;
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+  padding: 1rem 1.4rem;
+  box-shadow: 0 4px 14px rgba(14, 59, 110, 0.04);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.28s ease,
-              filter 0.28s ease;
+              background-color 0.28s ease;
+  cursor: default;
 }
 
-/* Cascada Staggered: Cuando la sección está revelada en scroll y el bloque de marcas está activo */
-.brands-carousel-container.revealed .brands-page.active-page .brand-card {
-  opacity: 0.94;
-  transform: translateY(0);
-}
-
-/* Delays progresivos de izquierda a derecha (0ms a 300ms) para los 6 logos */
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(1) {
-  transition-delay: 0ms;
-}
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(2) {
-  transition-delay: 90ms;
-}
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(3) {
-  transition-delay: 180ms;
-}
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(4) {
-  transition-delay: 270ms;
-}
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(5) {
-  transition-delay: 360ms;
-}
-.brands-carousel-container.revealed .brands-page.active-page .brand-card:nth-child(6) {
-  transition-delay: 450ms;
-}
-
-/* Cuando un bloque no está activo o el carrusel salió de pantalla: reseteo ágil sin delay */
-.brands-page:not(.active-page) .brand-card,
-.brands-carousel-container:not(.revealed) .brand-card {
-  opacity: 0;
-  transform: translateY(20px);
-  transition-delay: 0s !important;
-}
-
-/* Contenedor general en scroll: evita doble salto vertical y se enfoca en la cascada de logos */
-.brands-carousel-container.animate-on-scroll {
-  transform: none !important;
-}
-
-/* Hover interactivo: respuesta inmediata sin heredar el retraso de la cascada */
-.brand-card:hover {
-  transition-delay: 0s !important;
-  border-color: var(--color-primary-light, #2563eb);
-  transform: translateY(-4px) !important;
-  box-shadow: 0 12px 28px rgba(14, 59, 110, 0.13);
-  filter: grayscale(0%);
-  opacity: 1 !important;
-}
-
-.brand-card:active {
-  transition-delay: 0s !important;
-  transform: translateY(-2px) scale(0.98) !important;
-}
-
-.brand-card img {
+.brand-marquee-card img {
   max-width: 100%;
-  max-height: 75px;
+  max-height: 54px;
   object-fit: contain;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: grayscale(12%);
+  opacity: 0.92;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.32s ease,
+              opacity 0.32s ease;
   pointer-events: none;
 }
 
-.brand-card:hover img {
+/* Hover de tarjeta individual: resalte nítido y elevación táctil */
+.brand-marquee-card:hover {
+  transform: translateY(-4px) scale(1.025);
+  background: #ffffff;
+  border-color: rgba(14, 59, 110, 0.24);
+  box-shadow: 0 10px 24px rgba(14, 59, 110, 0.12);
+  z-index: 2;
+}
+
+.brand-marquee-card:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
   transform: scale(1.06);
 }
 
-/* Accesibilidad: reducción de movimiento si el sistema lo requiere */
-@media (prefers-reduced-motion: reduce) {
-  .brand-card {
-    opacity: 0.94 !important;
-    transform: none !important;
-    transition: none !important;
+/* Keyframes de animación continua circular (GPU compositing) */
+@keyframes brandsScrollLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-/* Indicadores de paginación */
-.brands-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.75rem;
+@keyframes brandsScrollRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-.brands-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(14, 59, 110, 0.2);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.brands-dot:hover {
-  background: rgba(14, 59, 110, 0.5);
-  transform: scale(1.2);
-}
-
-.brands-dot.active {
-  width: 28px;
-  background: var(--color-primary, #0e3b6e);
-  box-shadow: 0 2px 8px rgba(14, 59, 110, 0.28);
-}
-
-.brands-dot:focus-visible {
-  outline: 2px solid var(--color-primary, #0e3b6e);
-  outline-offset: 2px;
+/* Accesibilidad y Preferencias de Reducción de Movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .brands-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .brands-marquee-row {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Responsive */
 @media (max-width: 860px) {
-  .brands-carousel-container {
-    gap: 0.75rem;
+  .brands-section {
+    padding: 3.5rem 0 4rem;
   }
 
-  .brands-nav-btn {
-    width: 44px;
-    height: 44px;
+  .brands-marquee-wrapper {
+    gap: 1rem;
+    margin-top: 1.75rem;
   }
 
-  .brands-grid {
-    gap: 1.15rem;
+  .brands-marquee-track {
+    gap: 1rem;
   }
 
-  .brand-card {
-    padding: 1.25rem 1rem;
-    min-height: 100px;
+  .brand-marquee-card {
+    flex: 0 0 180px;
+    height: 86px;
+    padding: 0.85rem 1.15rem;
+    border-radius: 14px;
   }
 
-  .brand-card img {
-    max-height: 60px;
+  .brand-marquee-card img {
+    max-height: 46px;
   }
 }
 
-@media (max-width: 640px) {
-  .brands-carousel-container {
-    position: relative;
-    padding: 0 0.25rem;
+@media (max-width: 480px) {
+  .brands-marquee-wrapper {
+    gap: 0.85rem;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   }
 
-  .brands-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(6px);
-  }
-
-  .brands-nav-btn.brands-nav-prev {
-    left: -6px;
-  }
-
-  .brands-nav-btn.brands-nav-next {
-    right: -6px;
-  }
-
-  .brands-nav-btn:hover {
-    transform: translateY(-50%) scale(1.08);
-  }
-
-  .brands-nav-btn:active {
-    transform: translateY(-50%) scale(0.94);
-  }
-
-  .brands-nav-btn.is-hidden {
-    transform: translateY(-50%) scale(0.78);
-  }
-
-  .brands-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .brands-marquee-track {
     gap: 0.85rem;
   }
 
-  .brand-card {
-    padding: 1.1rem 0.75rem;
-    min-height: 90px;
+  .brand-marquee-card {
+    flex: 0 0 155px;
+    height: 76px;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
   }
 
-  .brand-card img {
-    max-height: 52px;
-  }
-}
-
-@media (max-width: 380px) {
-  .brand-card {
-    padding: 0.85rem 0.5rem;
-    min-height: 80px;
-  }
-
-  .brand-card img {
-    max-height: 44px;
+  .brand-marquee-card img {
+    max-height: 38px;
   }
 }
 
@@ -1824,10 +1688,20 @@ section {
   border-bottom: 1px solid #e2e8f0;
 }
 
+.features-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.features-viewport {
+  width: 100%;
+}
+
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 
 .feature-box {
@@ -1868,6 +1742,147 @@ section {
   color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.55;
+}
+
+/* En formato escritorio / web: las flechas y la paginación quedan completamente ocultas */
+.features-nav-btn,
+.features-pagination {
+  display: none;
+}
+
+/* ==========================================================================
+   Formato Mobile Exclusivo: Carrusel de Ventajas (1 cuadro a la vez con flechas)
+   - Cuadro 1: solo flecha derecha para pasar al del medio.
+   - Cuadro 2: dos flechas, una en cada lado.
+   - Cuadro 3: solo flecha izquierda.
+   ========================================================================== */
+@media (max-width: 768px) {
+  .features-carousel-wrapper {
+    position: relative;
+    padding: 0.25rem 0;
+    margin-top: 0.5rem;
+  }
+
+  .features-viewport {
+    overflow: hidden;
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+
+  .features-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: 300% !important; /* 3 cuadros de ancho completo */
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    will-change: transform;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .feature-box {
+    width: 33.333333% !important;
+    min-width: 33.333333% !important;
+    max-width: 33.333333% !important;
+    flex: 0 0 33.333333% !important;
+    box-sizing: border-box !important;
+    padding: 2.25rem 1.75rem !important;
+    min-height: 230px !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .features-nav-btn {
+    display: inline-flex !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1.5px solid rgba(14, 59, 110, 0.16) !important;
+    color: var(--color-primary, #0e3b6e) !important;
+    box-shadow: 0 6px 18px rgba(14, 59, 110, 0.18) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 20 !important;
+    transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.24s ease,
+                visibility 0.24s ease,
+                background-color 0.2s ease,
+                color 0.2s ease,
+                box-shadow 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+  }
+
+  .features-nav-prev {
+    left: -12px !important;
+  }
+
+  .features-nav-next {
+    right: -12px !important;
+  }
+
+  .features-nav-btn:hover {
+    background-color: var(--color-primary, #0e3b6e) !important;
+    color: #ffffff !important;
+    border-color: var(--color-primary, #0e3b6e) !important;
+  }
+
+  .features-nav-btn:active {
+    transform: translateY(-50%) scale(0.92) !important;
+  }
+
+  /* Ocultar flecha cuando no hay navegación en ese sentido */
+  .features-nav-btn.is-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-50%) scale(0.72) !important;
+  }
+
+  .features-pagination {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .features-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(14, 59, 110, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .features-dot:hover {
+    background: rgba(14, 59, 110, 0.5);
+    transform: scale(1.15);
+  }
+
+  .features-dot.active {
+    width: 26px;
+    background: var(--color-primary, #0e3b6e);
+    box-shadow: 0 2px 8px rgba(14, 59, 110, 0.3);
+  }
+
+  .features-dot:focus-visible {
+    outline: 2px solid var(--color-primary, #0e3b6e);
+    outline-offset: 2px;
+  }
 }
 
 /* ==========================================================================

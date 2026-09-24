@@ -103,167 +103,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // Carrusel de Marcas (Bloques de a 6 marcas con flechas laterales y paginación)
+  // Carrusel Continuo Circular de Marcas (2 filas horizontales infinitas)
   // ==========================================================================
   function setupBrandsCarousel() {
-    const track = document.getElementById('brands-track');
-    const viewport = document.getElementById('brands-viewport');
-    const prevBtn = document.getElementById('brands-prev-btn');
-    const nextBtn = document.getElementById('brands-next-btn');
-    const pagination = document.getElementById('brands-pagination');
+    const track1 = document.getElementById('brands-track-1');
+    const track2 = document.getElementById('brands-track-2');
 
-    if (!track || typeof BRANDS === 'undefined' || !BRANDS.length) return;
+    if ((!track1 && !track2) || typeof BRANDS === 'undefined' || !BRANDS.length) return;
 
-    const BRANDS_PER_PAGE = 6;
-    const totalPages = Math.ceil(BRANDS.length / BRANDS_PER_PAGE);
-    let currentBlock = 0;
+    // Dividimos las 18 marcas en 2 líneas de 9 marcas cada una
+    const halfCount = Math.ceil(BRANDS.length / 2);
+    const row1Brands = BRANDS.slice(0, halfCount); // 9 marcas principales
+    const row2Brands = BRANDS.slice(halfCount);    // 9 marcas complementarias
 
-    // 1. Renderizar páginas / bloques de 6 marcas
-    let pagesHTML = '';
-    for (let p = 0; p < totalPages; p++) {
-      const pageBrands = BRANDS.slice(p * BRANDS_PER_PAGE, (p + 1) * BRANDS_PER_PAGE);
-      pagesHTML += `
-        <div class="brands-page ${p === 0 ? 'active-page' : ''}" role="group" aria-roledescription="slide" aria-label="Bloque ${p + 1} de ${totalPages}">
-          <div class="brands-grid">
-            ${pageBrands.map(b => `
-              <div class="brand-card">
-                <img src="${b.logo}" alt="Logo de ${b.name}" loading="lazy">
-              </div>
-            `).join('')}
-          </div>
+    function createBrandCard(b) {
+      return `
+        <div class="brand-marquee-card" title="${b.name}">
+          <img src="${b.logo}" alt="Logo de ${b.name}" loading="lazy">
         </div>
       `;
     }
-    track.innerHTML = pagesHTML;
 
-    // 2. Renderizar indicadores de paginación (dots)
-    if (pagination && totalPages > 1) {
-      pagination.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-        <button type="button" class="brands-dot ${i === 0 ? 'active' : ''}" 
-          role="tab" 
-          aria-selected="${i === 0 ? 'true' : 'false'}" 
-          aria-label="Ir al bloque ${i + 1} de marcas" 
-          data-block="${i}">
-        </button>
-      `).join('');
+    // Para lograr el bucle infinito perfecto (sin saltos), cada track contiene
+    // dos mitades exactamente idénticas. Al trasladar de 0% a -50% (o de -50% a 0%),
+    // el reinicio es matemáticamente imperceptible porque cada tarjeta queda exactamente
+    // en la misma posición de píxeles.
+    function renderTrack(track, brands) {
+      if (!track) return;
+      // Duplicamos el conjunto para que cada mitad tenga 18 tarjetas (ancho holgado incluso en 4K)
+      const halfGroup = [...brands, ...brands];
+      const fullGroup = [...halfGroup, ...halfGroup];
+      track.innerHTML = fullGroup.map(createBrandCard).join('');
     }
 
-    // 3. Actualizar visibilidad de flechas según el bloque actual
-    function updateNavButtons() {
-      const isFirst = currentBlock <= 0;
-      const isLast = currentBlock >= totalPages - 1;
-
-      if (prevBtn) {
-        prevBtn.classList.toggle('is-hidden', isFirst);
-        prevBtn.setAttribute('tabindex', isFirst ? '-1' : '0');
-        prevBtn.setAttribute('aria-hidden', isFirst ? 'true' : 'false');
-        prevBtn.disabled = isFirst;
-      }
-
-      if (nextBtn) {
-        nextBtn.classList.toggle('is-hidden', isLast);
-        nextBtn.setAttribute('tabindex', isLast ? '-1' : '0');
-        nextBtn.setAttribute('aria-hidden', isLast ? 'true' : 'false');
-        nextBtn.disabled = isLast;
-      }
-    }
-
-    // 4. Cambiar de bloque con animación suave y delimitada
-    function goToBlock(index) {
-      if (index < 0) {
-        currentBlock = 0;
-      } else if (index >= totalPages) {
-        currentBlock = totalPages - 1;
-      } else {
-        currentBlock = index;
-      }
-
-      track.style.transform = `translateX(-${currentBlock * 100}%)`;
-
-      // Activar clase active-page en el bloque actual para disparar la animación en cascada de sus logos
-      const pages = track.querySelectorAll('.brands-page');
-      pages.forEach((page, idx) => {
-        page.classList.toggle('active-page', idx === currentBlock);
-      });
-
-      if (pagination) {
-        const dots = pagination.querySelectorAll('.brands-dot');
-        dots.forEach((dot, idx) => {
-          const isActive = idx === currentBlock;
-          dot.classList.toggle('active', isActive);
-          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        });
-      }
-
-      updateNavButtons();
-    }
-
-    // 5. Navegación con flechas a los costados
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        if (currentBlock > 0) {
-          goToBlock(currentBlock - 1);
-        }
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        if (currentBlock < totalPages - 1) {
-          goToBlock(currentBlock + 1);
-        }
-      });
-    }
-
-    // 6. Clic en los dots
-    if (pagination) {
-      pagination.addEventListener('click', (e) => {
-        const targetDot = e.target.closest('.brands-dot');
-        if (targetDot) {
-          const blockIdx = parseInt(targetDot.getAttribute('data-block'), 10);
-          if (!isNaN(blockIdx)) {
-            goToBlock(blockIdx);
-          }
-        }
-      });
-    }
-
-    // 7. Gestos táctiles (Swipe en móviles)
-    if (viewport) {
-      let touchStartX = 0;
-      let touchStartY = 0;
-
-      viewport.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
-
-      viewport.addEventListener('touchend', (e) => {
-        const diffX = e.changedTouches[0].screenX - touchStartX;
-        const diffY = e.changedTouches[0].screenY - touchStartY;
-        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
-          if (diffX < 0 && currentBlock < totalPages - 1) {
-            goToBlock(currentBlock + 1);
-          } else if (diffX > 0 && currentBlock > 0) {
-            goToBlock(currentBlock - 1);
-          }
-        }
-      }, { passive: true });
-    }
-
-    // 8. Navegación por teclado en el contenedor de marcas
-    const container = document.querySelector('.brands-carousel-container');
-    if (container) {
-      container.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentBlock > 0) {
-          goToBlock(currentBlock - 1);
-        } else if (e.key === 'ArrowRight' && currentBlock < totalPages - 1) {
-          goToBlock(currentBlock + 1);
-        }
-      });
-    }
-
-    // 9. Estado inicial de las flechas
-    updateNavButtons();
+    renderTrack(track1, row1Brands);
+    renderTrack(track2, row2Brands);
   }
 
   // Sistema de Notificaciones Toast Dinámicas
@@ -610,8 +484,146 @@ document.addEventListener('DOMContentLoaded', () => {
     updateWhatsAppVisibility();
   }
 
+  // ==========================================================================
+  // Deslizador Móvil para "¿Por qué elegir Distribuidora San Roque?"
+  // - En móvil muestra 1 cuadro a la vez con flechas contextuales:
+  //   * Cuadro 1: solo flecha derecha para avanzar al del medio.
+  //   * Cuadro 2: dos flechas, una en cada lado (volver al 1 o avanzar al 3).
+  //   * Cuadro 3: solo flecha izquierda para volver al del medio.
+  // - En escritorio permanece intacto como cuadrícula de 3 columnas.
+  // ==========================================================================
+  function setupFeaturesMobileSlider() {
+    const track = document.getElementById('features-track');
+    const viewport = document.getElementById('features-viewport');
+    const prevBtn = document.getElementById('features-prev-btn');
+    const nextBtn = document.getElementById('features-next-btn');
+    const pagination = document.getElementById('features-pagination');
+
+    if (!track) return;
+
+    const cards = track.querySelectorAll('.feature-box');
+    const totalCards = cards.length;
+    if (totalCards <= 1) return;
+
+    let currentIndex = 0;
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    function updateSlider(index) {
+      if (!isMobile()) {
+        track.style.transform = '';
+        return;
+      }
+
+      currentIndex = Math.max(0, Math.min(index, totalCards - 1));
+
+      // Desplazar exactamente 1 cuadro a la vez (100% / totalCards por paso)
+      const percentStep = 100 / totalCards;
+      track.style.transform = `translate3d(-${currentIndex * percentStep}%, 0, 0)`;
+
+      // Reglas de flechas requeridas:
+      // Cuadro 0: solo flecha derecha visible (ocultar flecha izquierda)
+      // Cuadro 1: dos flechas, una en cada lado
+      // Cuadro 2: solo flecha izquierda visible (ocultar flecha derecha)
+      if (prevBtn) {
+        const hidePrev = currentIndex === 0;
+        prevBtn.classList.toggle('is-hidden', hidePrev);
+        prevBtn.setAttribute('tabindex', hidePrev ? '-1' : '0');
+        prevBtn.setAttribute('aria-hidden', hidePrev ? 'true' : 'false');
+      }
+
+      if (nextBtn) {
+        const hideNext = currentIndex === totalCards - 1;
+        nextBtn.classList.toggle('is-hidden', hideNext);
+        nextBtn.setAttribute('tabindex', hideNext ? '-1' : '0');
+        nextBtn.setAttribute('aria-hidden', hideNext ? 'true' : 'false');
+      }
+
+      // Actualizar puntos de paginación móvil
+      if (pagination) {
+        const dots = pagination.querySelectorAll('.features-dot');
+        dots.forEach((dot, idx) => {
+          const isActive = idx === currentIndex;
+          dot.classList.toggle('active', isActive);
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+      }
+    }
+
+    // Navegación con flechas
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          updateSlider(currentIndex - 1);
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < totalCards - 1) {
+          updateSlider(currentIndex + 1);
+        }
+      });
+    }
+
+    // Clic en los puntos de paginación
+    if (pagination) {
+      pagination.addEventListener('click', (e) => {
+        const dot = e.target.closest('.features-dot');
+        if (dot) {
+          const targetIdx = parseInt(dot.getAttribute('data-index'), 10);
+          if (!isNaN(targetIdx)) {
+            updateSlider(targetIdx);
+          }
+        }
+      });
+    }
+
+    // Soporte para gestos táctiles (Swipe en móvil)
+    if (viewport) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      viewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', (e) => {
+        if (!isMobile()) return;
+        const diffX = e.changedTouches[0].screenX - touchStartX;
+        const diffY = e.changedTouches[0].screenY - touchStartY;
+
+        // Si el desplazamiento horizontal es significativo (> 40px)
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0 && currentIndex < totalCards - 1) {
+            updateSlider(currentIndex + 1);
+          } else if (diffX > 0 && currentIndex > 0) {
+            updateSlider(currentIndex - 1);
+          }
+        }
+      }, { passive: true });
+    }
+
+    // Ajuste en cambio de tamaño de pantalla (mantener desktop intacto)
+    window.addEventListener('resize', () => {
+      if (isMobile()) {
+        updateSlider(currentIndex);
+      } else {
+        track.style.transform = '';
+      }
+    }, { passive: true });
+
+    // Estado inicial
+    updateSlider(0);
+  }
+
   // Inicializar
   setupBrandsCarousel();
+  setupFeaturesMobileSlider();
   setupAnimatedCounters();
   setupScrollAnimations();
   setupWhatsAppVisibility();
