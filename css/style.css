@@ -1546,10 +1546,12 @@ section {
   animation: brandsScrollRight var(--marquee-duration, 24s) linear infinite;
 }
 
-/* Pausa suave de la animación al pasar el cursor sobre la fila */
-.brands-marquee-row:hover .brands-marquee-track,
-.brands-marquee-row:focus-within .brands-marquee-track {
-  animation-play-state: paused;
+/* Pausa suave de la animación al pasar el cursor sobre la fila (solo en dispositivos con cursor/hover fino) */
+@media (hover: hover) and (pointer: fine) {
+  .brands-marquee-row:hover .brands-marquee-track,
+  .brands-marquee-row:focus-within .brands-marquee-track {
+    animation-play-state: paused;
+  }
 }
 
 /* Tarjeta individual de marca */
@@ -1643,6 +1645,13 @@ section {
 
   .brands-marquee-track {
     gap: 1rem;
+  }
+
+  /* Desactivar la pausa al tocar o interactuar en formato mobile */
+  .brands-marquee-row:hover .brands-marquee-track,
+  .brands-marquee-row:focus-within .brands-marquee-track,
+  .brands-marquee-row:active .brands-marquee-track {
+    animation-play-state: running !important;
   }
 
   .brand-marquee-card {
