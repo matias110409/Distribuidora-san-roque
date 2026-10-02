@@ -116,24 +116,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const row1Brands = BRANDS.slice(0, halfCount); // 9 marcas principales
     const row2Brands = BRANDS.slice(halfCount);    // 9 marcas complementarias
 
-    function createBrandCard(b) {
+    function createBrandCard(b, isClone = false) {
+      const ariaHidden = isClone ? ' aria-hidden="true"' : '';
+
       return `
-        <div class="brand-marquee-card" title="${b.name}">
+        <div class="brand-marquee-card" title="${b.name}"${ariaHidden}>
           <img src="${b.logo}" alt="Logo de ${b.name}" loading="lazy">
         </div>
       `;
     }
 
-    // Para lograr el bucle infinito perfecto (sin saltos), cada track contiene
-    // dos mitades exactamente idénticas. Al trasladar de 0% a -50% (o de -50% a 0%),
-    // el reinicio es matemáticamente imperceptible porque cada tarjeta queda exactamente
-    // en la misma posición de píxeles.
     function renderTrack(track, brands) {
-      if (!track) return;
-      // Duplicamos el conjunto para que cada mitad tenga 18 tarjetas (ancho holgado incluso en 4K)
-      const halfGroup = [...brands, ...brands];
-      const fullGroup = [...halfGroup, ...halfGroup];
-      track.innerHTML = fullGroup.map(createBrandCard).join('');
+      if (!track || !brands.length) return;
+
+      // Una secuencia de marcas y una copia para cerrar el ciclo
+      const fullGroup = [...brands, ...brands];
+
+      // Mantiene el ritmo si en el futuro cambia la cantidad de marcas por fila
+      const durationSeconds = 24 * (brands.length / 9);
+      track.style.setProperty('--marquee-duration', `${durationSeconds}s`);
+
+      track.innerHTML = fullGroup
+        .map((brand, index) => createBrandCard(brand, index >= brands.length))
+        .join('');
     }
 
     renderTrack(track1, row1Brands);

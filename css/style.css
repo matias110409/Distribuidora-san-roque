@@ -1538,12 +1538,12 @@ section {
 
 /* Fila 1: desplazamiento continuo circular hacia la izquierda */
 .brands-marquee-row[data-direction="left"] .brands-marquee-track {
-  animation: brandsScrollLeft 48s linear infinite;
+  animation: brandsScrollLeft var(--marquee-duration, 24s) linear infinite;
 }
 
 /* Fila 2: desplazamiento continuo circular hacia la derecha */
 .brands-marquee-row[data-direction="right"] .brands-marquee-track {
-  animation: brandsScrollRight 48s linear infinite;
+  animation: brandsScrollRight var(--marquee-duration, 24s) linear infinite;
 }
 
 /* Pausa suave de la animación al pasar el cursor sobre la fila */
